@@ -1,8 +1,9 @@
 ﻿<Properties>
   <MonoDevelop.Ide.Workspace />
-  <MonoDevelop.Ide.Workbench ActiveDocument="..\Rogue\Assets\Scripts\BoardManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Script\PlayerMovement.cs">
     <Files>
-      <File FileName="..\Rogue\Assets\Scripts\BoardManager.cs" Line="75" Column="12" />
+      <File FileName="..\BoyShoot\Assets\_CompletedAssets\Scripts\Player\PlayerMovement.cs" Line="58" Column="74" />
+      <File FileName="Assets\Script\PlayerMovement.cs" Line="13" Column="3" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
