@@ -6,16 +6,20 @@ public class PlayerControl : MonoBehaviour {
 	public int speed;
 	public float x;
 	public float y;
-	public int jumpVelocity;
+	public int jumpForce;
 	public Rigidbody2D Rock;
 
 	private Rigidbody2D Rbody;
 	private Animator animator;
-	private Vector3 antiGravity;
-	private bool canJump;
-	private bool onGround;
-	private Vector3 groundEulerAngle;
 
+	//private Vector3 antiGravity;
+	//private bool canJump;
+
+	private bool onGround;
+	private bool contactRock;
+
+	private Vector3 groundEulerAngle;
+	private Vector3 move;
 
 
 	// Use this for initialization
@@ -26,6 +30,7 @@ public class PlayerControl : MonoBehaviour {
 		x = 0.1f;
 		y = -0.0f;
 		onGround = false;
+		contactRock = false;
 
 	}
 
@@ -37,22 +42,43 @@ public class PlayerControl : MonoBehaviour {
 	{
 
 		animator.SetBool ("PushRock", false);
-		Rbody.transform.rotation = Quaternion.identity;
+		//Rbody.transform.rotation = Quaternion.identity;
+		Vector3 jump = new Vector3 (0.0f, jumpForce, 0.0f);
+		//Debug.Log ("angle:"+ groundEulerAngle.z);
 
-		Vector2 jump = new Vector2 (0.0f, jumpVelocity);
+
 //	Freeze player if on slope
-		if (groundEulerAngle.z != 0.0f)
-			Rbody.velocity = new Vector3(0.0f,0.0f,0.0f);
-//	When can player jump
-		if ((Input.GetAxis ("Jump")!=0)&(onGround))
-			Rbody.velocity = jump;
+		/*if (groundEulerAngle.z != 0.0f) 
+		{
+			Rbody.velocity = new Vector3 (0.0f, 0.0f, 0.0f);
+			Debug.Log ("OnSlope");
+		}*/
 
+
+//  player jump when key is pressed and is on ground.
+		if ((Input.GetAxis ("Jump") != 0) & ((onGround)||(contactRock)))
+		{
+			float xSpeed= Rbody.velocity.x;
+			Rbody.velocity = new Vector3(xSpeed,jumpForce,0.0f);
+			Debug.Log ("jump");
+		}
+
+		float ySpeed = Rbody.velocity.y;
 		float moveHorizontal = Input.GetAxis ("Horizontal");
 
-//	Move according to gound angle
 
-		Vector3 move = new Vector3 ((moveHorizontal/(Mathf.Cos(groundEulerAngle.z))* speed), (moveHorizontal/(Mathf.Sin(groundEulerAngle.z)) * speed), 0.0f);
-		Rbody.transform.position += move;
+//	Move according to gound angle when is grounded
+
+		/*if (onGround)
+		{
+			move = new Vector3 ((moveHorizontal * speed), (moveHorizontal * (Mathf.Sin (groundEulerAngle.z)) * speed),0.0f);
+
+		}*/
+
+		//move normally when is in air
+
+		move = new Vector3 ((moveHorizontal * speed),(ySpeed),0.0f);
+		Rbody.velocity = move;
 
 //	Animation change according to action
 		if (moveHorizontal!=0.0f)
@@ -64,21 +90,28 @@ public class PlayerControl : MonoBehaviour {
 
 
 
-
+	// when colliding with other objects, change state bools
 	void OnTriggerStay2D(Collider2D other)
 	{
-		if (other.gameObject.CompareTag ("RockContact"))
-			animator.SetBool("PushRock",true);
 
 		if (other.gameObject.CompareTag ("Ground")) 
 		{
 			onGround = true;
 			groundEulerAngle = other.transform.eulerAngles;
-			print(groundEulerAngle);
-
+			//print(groundEulerAngle);
+		}
+		if (other.gameObject.CompareTag ("RockContact"))
+		{	
+			if (onGround)
+			{
+				animator.SetBool ("PushRock", true);
+			}
+			contactRock = true;
+			Debug.Log ("contact");
 		}
 	}
 
+	// change state bools back when leaving other objects
 	void OnTriggerExit2D(Collider2D other)
 	{
 		if (other.gameObject.CompareTag ("Ground"))
@@ -86,6 +119,11 @@ public class PlayerControl : MonoBehaviour {
 			onGround = false;
 			groundEulerAngle = new Vector3(0.0f,0.0f,0.0f);
 			print (groundEulerAngle);
+		}
+
+		if (other.gameObject.CompareTag ("RockContact"))
+		{
+			contactRock=false;
 		}
 
 	}
