@@ -72,25 +72,25 @@ public class PlayerControl : MonoBehaviour {
 
 		if (onGround) 
 		{
-			/*
-			Vector2 origin= transform.position;
+			int myLayer = 1 << 8;
+			Vector2 origin= new Vector2 (transform.position.x, (transform.position.y-1.25f));
 			Vector2 Direction= new Vector2(moveHorizontal, 0.0f);
 
 			//Ray2D myRay=new Ray2D(origin,Direction);
 
-			Debug.DrawRay(origin, new Vector2(moveHorizontal*10f,0.0f));
+			Debug.DrawRay(new Vector3 (transform.position.x, (transform.position.y-1f),0.1f), new Vector3(moveHorizontal*10f,0.0f,0.0f));
 
 
 
 			//go down 30 degree when going down a slope;
 			if (onSlope)
 			{
-				bool ray=Physics2D.Raycast(origin,Direction, 10f,8);
+				bool ray=Physics2D.Raycast(origin,Direction, 10f,myLayer);
 				Debug.Log(ray);
 
 				if ( !ray)
 				{
-					move = new Vector3((moveHorizontal*speed),((-0.5f*moveHorizontal)*speed+ySpeed), 0.0f);
+					move = new Vector3((moveHorizontal*speed),(-(moveHorizontal)*speed*0.3f+ySpeed), 0.0f);
 					//Debug.Log(hit.collider.tag);
 					Debug.Log ("going down");
 				}

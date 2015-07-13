@@ -23,3 +23,6 @@ ver 0.04
 	
 	6.tried to used raycast to dected upward slope and downward slope, did not work out very well.
 	also the downward movement is not smooth when a downward force is added.
+
+ver 0.05
+	solved the raycast and move downward problem
