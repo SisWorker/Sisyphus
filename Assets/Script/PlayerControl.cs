@@ -8,7 +8,6 @@ public class PlayerControl : MonoBehaviour {
 	public float y;
 	public int jumpForce;
 	public Rigidbody2D Rock;
-
 	private Rigidbody2D Rbody;
 	private Animator animator;
 
@@ -17,6 +16,11 @@ public class PlayerControl : MonoBehaviour {
 
 	private bool onGround;
 	private bool contactRock;
+	private bool onSlope;
+
+	private bool facingRight;
+
+	private int speedLog;
 
 	private Vector3 groundEulerAngle;
 	private Vector3 move;
@@ -31,9 +35,13 @@ public class PlayerControl : MonoBehaviour {
 		y = -0.0f;
 		onGround = false;
 		contactRock = false;
+		onSlope = false;
+		facingRight = false;
+
+		Vector3 jump = new Vector3 (0.0f, jumpForce, 0.0f);
+		speedLog = speed;
 
 	}
-
 
 
 
@@ -42,49 +50,62 @@ public class PlayerControl : MonoBehaviour {
 	{
 
 		animator.SetBool ("PushRock", false);
-		//Rbody.transform.rotation = Quaternion.identity;
-		Vector3 jump = new Vector3 (0.0f, jumpForce, 0.0f);
-		//Debug.Log ("angle:"+ groundEulerAngle.z);
 
 
-//	Freeze player if on slope
-		/*if (groundEulerAngle.z != 0.0f) 
+	 //  player jump when key is pressed and is on ground.
+		if ((Input.GetAxis ("Jump") != 0) & ((onGround) || (contactRock))) 
 		{
-			Rbody.velocity = new Vector3 (0.0f, 0.0f, 0.0f);
-			Debug.Log ("OnSlope");
-		}*/
-
-
-//  player jump when key is pressed and is on ground.
-		if ((Input.GetAxis ("Jump") != 0) & ((onGround)||(contactRock)))
-		{
-			float xSpeed= Rbody.velocity.x;
-			Rbody.velocity = new Vector3(xSpeed,jumpForce,0.0f);
-			Debug.Log ("jump");
+			float xSpeed = Rbody.velocity.x;
+			Rbody.velocity = new Vector3 (xSpeed, jumpForce, 0.0f);
 		}
 
+		//get move input
 		float ySpeed = Rbody.velocity.y;
 		float moveHorizontal = Input.GetAxis ("Horizontal");
-
-
-//	Move according to gound angle when is grounded
-
-		/*if (onGround)
-		{
-			move = new Vector3 ((moveHorizontal * speed), (moveHorizontal * (Mathf.Sin (groundEulerAngle.z)) * speed),0.0f);
-
-		}*/
-
-		//move normally when is in air
-
 		move = new Vector3 ((moveHorizontal * speed),(ySpeed),0.0f);
-		Rbody.velocity = move;
 
-//	Animation change according to action
+		//flip accoring to move direction
+		if (moveHorizontal > 0 && !facingRight)
+			Flip ();
+		else if (moveHorizontal < 0 && facingRight)
+			Flip ();
+
+		if (onGround) 
+		{
+			/*
+			Vector2 origin= transform.position;
+			Vector2 Direction= new Vector2(moveHorizontal, 0.0f);
+
+			//Ray2D myRay=new Ray2D(origin,Direction);
+
+			Debug.DrawRay(origin, new Vector2(moveHorizontal*10f,0.0f));
+
+
+
+			//go down 30 degree when going down a slope;
+			if (onSlope)
+			{
+				bool ray=Physics2D.Raycast(origin,Direction, 10f,8);
+				Debug.Log(ray);
+
+				if ( !ray)
+				{
+					move = new Vector3((moveHorizontal*speed),((-0.5f*moveHorizontal)*speed+ySpeed), 0.0f);
+					//Debug.Log(hit.collider.tag);
+					Debug.Log ("going down");
+				}
+			}  
+
+		}
+
 		if (moveHorizontal!=0.0f)
 			animator.SetBool("Walking", true);
 		else
 			animator.SetBool("Walking",false);
+
+		//move=move.normalized;
+		Rbody.velocity = move;
+
 	}
 
 
@@ -94,10 +115,14 @@ public class PlayerControl : MonoBehaviour {
 	void OnTriggerStay2D(Collider2D other)
 	{
 
-		if (other.gameObject.CompareTag ("Ground")) 
+		if (other.gameObject.layer == 8) 
 		{
 			onGround = true;
-			groundEulerAngle = other.transform.eulerAngles;
+
+			if (other.gameObject.CompareTag ("Slope"))
+				onSlope=true;
+
+			//groundEulerAngle = other.transform.eulerAngles;
 			//print(groundEulerAngle);
 		}
 		if (other.gameObject.CompareTag ("RockContact"))
@@ -105,27 +130,44 @@ public class PlayerControl : MonoBehaviour {
 			if (onGround)
 			{
 				animator.SetBool ("PushRock", true);
+				speed=speedLog/2;
 			}
+			//if stand on stone
+			else
+				//Rock.constraints=RigidbodyConstraints2D.FreezeRotation;
+
 			contactRock = true;
-			Debug.Log ("contact");
+
+		
 		}
 	}
 
 	// change state bools back when leaving other objects
 	void OnTriggerExit2D(Collider2D other)
 	{
-		if (other.gameObject.CompareTag ("Ground"))
+		if (other.gameObject.layer == 8)
 		{
 			onGround = false;
-			groundEulerAngle = new Vector3(0.0f,0.0f,0.0f);
-			print (groundEulerAngle);
+			onSlope=false;
+			//groundEulerAngle = new Vector3(0.0f,0.0f,0.0f);
+			//print (groundEulerAngle);
 		}
 
 		if (other.gameObject.CompareTag ("RockContact"))
 		{
 			contactRock=false;
+			speed=speedLog;
+			//Rock.constraints=RigidbodyConstraints2D.None;
 		}
 
 	}
-		
+
+	//flip the sprite
+	void Flip()
+	{
+		facingRight = !facingRight;
+		Vector3 theScale = transform.localScale;
+		theScale.x *= -1;
+		transform.localScale = theScale;
+	}	
 }
