@@ -181,6 +181,48 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
+--- !u!1 &159270639
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 159270640}
+  - 114: {fileID: 159270641}
+  m_Layer: 0
+  m_Name: DialogBox
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &159270640
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 159270639}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 886000849}
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+--- !u!114 &159270641
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 159270639}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e888598d783b14c7bb66dfaab54d2e9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dialogOn: 1
+  DialogCanvas: {fileID: 886000845}
 --- !u!1 &181879886
 GameObject:
   m_ObjectHideFlags: 0
@@ -302,11 +344,11 @@ MonoBehaviour:
     m_MinSize: 10
     m_MaxSize: 40
     m_Alignment: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "What\uFF1F\uFF1F\uFF01"
+  m_Text: 
 --- !u!222 &496639479
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -521,7 +563,7 @@ Transform:
   - {fileID: 929275731}
   - {fileID: 1495453719}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
 --- !u!1 &730340517
 GameObject:
   m_ObjectHideFlags: 0
@@ -740,7 +782,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f9d8686ac76442368fc0cd388cb1c7f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogString: 
+  DialogBox: {fileID: 159270639}
 --- !u!1 &829740328
 GameObject:
   m_ObjectHideFlags: 0
@@ -1404,7 +1446,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 262344be323c244fbb9964f2810c5f50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pauseMenuCanvas: {fileID: 1094171546}
 --- !u!114 &884661961
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1507,7 +1548,7 @@ GameObject:
   - 114: {fileID: 886000847}
   - 114: {fileID: 886000846}
   m_Layer: 0
-  m_Name: Canvas
+  m_Name: DialogCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1579,8 +1620,8 @@ RectTransform:
   m_Children:
   - {fileID: 884661959}
   - {fileID: 763995178}
-  m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_Father: {fileID: 159270640}
+  m_RootOrder: 0
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
@@ -1855,7 +1896,7 @@ Transform:
   m_Children:
   - {fileID: 128101956}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 2
 --- !u!114 &1094171548
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2013,7 +2054,7 @@ Transform:
   - {fileID: 1784186142}
   - {fileID: 852765866}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
 --- !u!1 &1370680950
 GameObject:
   m_ObjectHideFlags: 0
@@ -2559,7 +2600,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
 --- !u!1 &1470077221
 GameObject:
   m_ObjectHideFlags: 0
@@ -2782,7 +2823,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
 --- !u!212 &1568972914
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -2883,7 +2924,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1666829056}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 763995181}
+        m_MethodName: Proceed
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1666829056
@@ -3082,7 +3134,7 @@ Transform:
   m_Children:
   - {fileID: 1054431324}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
 --- !u!114 &1854804844
 MonoBehaviour:
   m_ObjectHideFlags: 0
