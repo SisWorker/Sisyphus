@@ -10,9 +10,13 @@ public class DialogControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (dialogOn) {
+			Time.timeScale = 0f;
+			Debug.Log ("Paused");
 			DialogCanvas.SetActive (true);
 		} else {
+			Debug.Log ("resume");
 			DialogCanvas.SetActive (false);
+			Time.timeScale = 1f;
 		}
 	
 	}

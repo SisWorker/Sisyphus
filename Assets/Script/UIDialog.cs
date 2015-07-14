@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine.UI;
 public class UIDialog : MonoBehaviour {
 
-	public GameObject DialogBox;
+	public GameObject DialogCanvas;
 	private Text dialogText;
 	private int dialogCount;
 	private bool done;
@@ -16,6 +16,7 @@ public class UIDialog : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		bool dialogOn = true;
 		if (dialogCount == 0) {
 			dialogText.text = "What";
 		}
@@ -31,14 +32,13 @@ public class UIDialog : MonoBehaviour {
 		else if (dialogCount == 4) {
 			dialogText.text = "What????";
 		} else {
-
-			DialogBox.SetActive(false);
+			dialogOn = false;
 		}
+		DialogCanvas.SetActive(dialogOn);
 	
 	}
 	public void Proceed()
 	{
 		dialogCount++;
-
 	}
 }

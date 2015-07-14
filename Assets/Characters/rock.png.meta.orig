@@ -1,11 +1,16 @@
 fileFormatVersion: 2
 <<<<<<< HEAD
-guid: ffed6a3d418b5a4438119eb022735c73
+guid: f1d74eb9ce6284e84aeba796814e09ef
+timeCreated: 1436630932
+=======
+<<<<<<< HEAD
+guid: f70a2ad0e9bd22a4e8782b4daf8e4ac4
 timeCreated: 1435474072
 =======
-guid: b989140b5dc134b54ab6a5c87190217a
-timeCreated: 1436630927
+guid: f1d74eb9ce6284e84aeba796814e09ef
+timeCreated: 1436630932
 >>>>>>> e2ae2785fe9550e38ac3604bc5894fbdd0d518f2
+>>>>>>> Boting
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName: {}

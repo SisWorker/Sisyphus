@@ -1,0 +1,28 @@
+Boting 7/13:
+
+ver 0.04 
+
+	1. added slope tag, using layer to differentiate ground
+
+
+	2.rock heavier:
+
+		player move at lower speed when pushing rock
+
+		rock now has a speed limit, and the limit is lowered when being pushed by player
+
+		
+	3.player sprite now can flip according to moving direction.
+
+	4.player can jump on rock to slow and stop rock's movement, can freeze rock on a slope.
+
+	problem: 
+
+	5.player's speed on slope needs to eb normalized, it is moving faster than intended on slope.
+
+	
+	6.tried to used raycast to dected upward slope and downward slope, did not work out very well.
+	also the downward movement is not smooth when a downward force is added.
+
+ver 0.05
+	solved the raycast and move downward problem
