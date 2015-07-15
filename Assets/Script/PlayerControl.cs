@@ -62,7 +62,9 @@ public class PlayerControl : MonoBehaviour {
 		//get move input
 		float ySpeed = Rbody.velocity.y;
 		float moveHorizontal = Input.GetAxis ("Horizontal");
-		move = new Vector3 ((moveHorizontal * speed),(ySpeed),0.0f);
+
+		move = new Vector3 ((moveHorizontal)*speed,(ySpeed),0.0f);
+
 
 		//flip accoring to move direction
 		if (moveHorizontal > 0 && !facingRight)
@@ -73,12 +75,12 @@ public class PlayerControl : MonoBehaviour {
 		if (onGround) 
 		{
 			int myLayer = 1 << 8;
-			Vector2 origin= new Vector2 (transform.position.x, (transform.position.y-1.25f));
+			Vector2 origin= new Vector2 (transform.position.x, (transform.position.y-1.1f));
 			Vector2 Direction= new Vector2(moveHorizontal, 0.0f);
 
 			//Ray2D myRay=new Ray2D(origin,Direction);
 
-			Debug.DrawRay(new Vector3 (transform.position.x, (transform.position.y-1f),0.1f), new Vector3(moveHorizontal*10f,0.0f,0.0f));
+			Debug.DrawRay(new Vector3 (transform.position.x, (transform.position.y-1.1f),0.1f), new Vector3(moveHorizontal*10f,0.0f,0.0f));
 
 
 
@@ -87,13 +89,16 @@ public class PlayerControl : MonoBehaviour {
 			{
 				bool ray=Physics2D.Raycast(origin,Direction, 10f,myLayer);
 				Debug.Log(ray);
-
-				if ( !ray)
+				if (( !ray) && (moveHorizontal != 0))
 				{
-					move = new Vector3((moveHorizontal*speed),(-(moveHorizontal)*speed*0.3f+ySpeed), 0.0f);
+					move = new Vector3((moveHorizontal*speed/1.16f),(-(0.75f)*speed*0.3f+ySpeed), 0.0f);
+
 					//Debug.Log(hit.collider.tag);
 					Debug.Log ("going down");
 				}
+				else 
+					move = new Vector3((moveHorizontal*speed/1.16f),ySpeed,0.0f);
+
 			}  
 
 		}
@@ -122,15 +127,13 @@ public class PlayerControl : MonoBehaviour {
 			if (other.gameObject.CompareTag ("Slope"))
 				onSlope=true;
 
-			//groundEulerAngle = other.transform.eulerAngles;
-			//print(groundEulerAngle);
 		}
 		if (other.gameObject.CompareTag ("RockContact"))
 		{	
 			if (onGround)
 			{
 				animator.SetBool ("PushRock", true);
-				speed=speedLog/2;
+				speed=speedLog/8*5;
 			}
 			//if stand on stone
 			else
@@ -149,15 +152,13 @@ public class PlayerControl : MonoBehaviour {
 		{
 			onGround = false;
 			onSlope=false;
-			//groundEulerAngle = new Vector3(0.0f,0.0f,0.0f);
-			//print (groundEulerAngle);
+
 		}
 
 		if (other.gameObject.CompareTag ("RockContact"))
 		{
 			contactRock=false;
 			speed=speedLog;
-			//Rock.constraints=RigidbodyConstraints2D.None;
 		}
 
 	}

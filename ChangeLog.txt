@@ -26,3 +26,9 @@ ver 0.04
 
 ver 0.05
 	solved the raycast and move downward problem
+
+ver 0.06
+	1. sloved the bug that rock tends to float up when being pushed upward by limiting its y speed
+	2. sloved the hiden bug caused by vector that player acctually move faster when moving on slope
+	3. changed pushing speed to make the game more smooth
+	4. added a polygon collider to player that player now looks more like walking on ground

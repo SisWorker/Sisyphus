@@ -14,6 +14,7 @@ GameObject:
   - 114: {fileID: 11418444}
   - 212: {fileID: 21254356}
   - 58: {fileID: 5811432}
+  - 60: {fileID: 6095130}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -28,7 +29,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 171116}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 44.4000015, y: 14.1000004, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -62,6 +63,27 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 1
+--- !u!60 &6095130
+PolygonCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 171116}
+  m_Enabled: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  m_Points:
+    m_Paths:
+    - - {x: .0273044109, y: 1.27305198}
+      - {x: .841835797, y: .718595147}
+      - {x: .888141096, y: -.563270152}
+      - {x: .712495685, y: -.876521766}
+      - {x: -.0304920673, y: -1.27320504}
+      - {x: -.60818553, y: -.897809863}
+      - {x: -.888142467, y: -.535965085}
+      - {x: -.787225008, y: .609375775}
 --- !u!61 &6164456
 BoxCollider2D:
   m_ObjectHideFlags: 1
