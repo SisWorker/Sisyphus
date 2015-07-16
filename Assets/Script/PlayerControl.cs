@@ -11,12 +11,15 @@ public class PlayerControl : MonoBehaviour {
 	private Rigidbody2D Rbody;
 	private Animator animator;
 
+	public bool Operating;
+
 	//private Vector3 antiGravity;
 	//private bool canJump;
 
 	private bool onGround;
 	private bool contactRock;
 	private bool onSlope;
+	private bool withWheel;
 
 	private bool facingRight;
 
@@ -50,13 +53,18 @@ public class PlayerControl : MonoBehaviour {
 	{
 
 		animator.SetBool ("PushRock", false);
+		Operating = false;
 
 
-	 //  player jump when key is pressed and is on ground.
+	 //  player jump when key is pressed and is on ground or on rock.
 		if ((Input.GetAxis ("Jump") != 0) & ((onGround) || (contactRock))) 
 		{
-			float xSpeed = Rbody.velocity.x;
-			Rbody.velocity = new Vector3 (xSpeed, jumpForce, 0.0f);
+			//cannot jump while pushing 
+			if (! ((onGround) && (contactRock)))
+			{
+				float xSpeed = Rbody.velocity.x;
+				Rbody.velocity = new Vector3 (xSpeed, jumpForce, 0.0f);
+			}
 		}
 
 		//get move input
@@ -77,10 +85,17 @@ public class PlayerControl : MonoBehaviour {
 			int myLayer = 1 << 8;
 			Vector2 origin= new Vector2 (transform.position.x, (transform.position.y-1.1f));
 			Vector2 Direction= new Vector2(moveHorizontal, 0.0f);
-
 			//Ray2D myRay=new Ray2D(origin,Direction);
-
 			Debug.DrawRay(new Vector3 (transform.position.x, (transform.position.y-1.1f),0.1f), new Vector3(moveHorizontal*10f,0.0f,0.0f));
+
+			if (Input.GetAxis ("Interact") != 0)
+
+			{
+				//Debug.Log("operating");
+
+				if (withWheel)
+					Operating=true;
+			}
 
 
 
@@ -91,13 +106,13 @@ public class PlayerControl : MonoBehaviour {
 				Debug.Log(ray);
 				if (( !ray) && (moveHorizontal != 0))
 				{
-					move = new Vector3((moveHorizontal*speed/1.16f),(-(0.75f)*speed*0.3f+ySpeed), 0.0f);
+					move = new Vector3((moveHorizontal*speed/1.1f),(-(0.75f)*speed*0.3f+ySpeed), 0.0f);
 
 					//Debug.Log(hit.collider.tag);
 					Debug.Log ("going down");
 				}
 				else 
-					move = new Vector3((moveHorizontal*speed/1.16f),ySpeed,0.0f);
+					move = new Vector3((moveHorizontal*speed/1.1f),ySpeed,0.0f);
 
 			}  
 
@@ -110,6 +125,7 @@ public class PlayerControl : MonoBehaviour {
 
 		//move=move.normalized;
 		Rbody.velocity = move;
+
 
 	}
 
@@ -137,12 +153,18 @@ public class PlayerControl : MonoBehaviour {
 			}
 			//if stand on stone
 			else
-				//Rock.constraints=RigidbodyConstraints2D.FreezeRotation;
-
-			contactRock = true;
-
-		
+			{
+				contactRock = true;
+			}
 		}
+
+		if (other.gameObject.CompareTag ("Wheel")) 
+		{
+			withWheel = true;
+			//Debug.Log ("withWheel");
+		}
+					
+			
 	}
 
 	// change state bools back when leaving other objects
@@ -160,6 +182,8 @@ public class PlayerControl : MonoBehaviour {
 			contactRock=false;
 			speed=speedLog;
 		}
+		if (other.gameObject.CompareTag ("Wheel"))
+			withWheel = false;
 
 	}
 

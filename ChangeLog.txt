@@ -27,8 +27,17 @@ ver 0.04
 ver 0.05
 	solved the raycast and move downward problem
 
-ver 0.06
+ver 0.06--7/15
+
 	1. sloved the bug that rock tends to float up when being pushed upward by limiting its y speed
 	2. sloved the hiden bug caused by vector that player acctually move faster when moving on slope
 	3. changed pushing speed to make the game more smooth
 	4. added a polygon collider to player that player now looks more like walking on ground
+
+ver 0.07 --7/16
+	1. added wheel and bridge. bridge belongs to ground layer and spins to a centain degree 
+	while player interact with wheel.
+	2. bridge's tag change to slope when forms a slope.
+	2. added input botton "interact", the key is E.
+	3. canceled player's ability to jump while pushing rock.
+	4. saved sevral important gameObjects as prefabs.

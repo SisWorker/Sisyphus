@@ -35,7 +35,7 @@ public class RockObject : MonoBehaviour {
 		{
 			Rock.velocity = new Vector2(-MaxSpeed, ySpeed);
 		}
-		if ((onGround) || (playerContact))
+		if ((playerContact))
 		{
 			if (Rock.velocity.y > MaxSpeedY)
 			{
@@ -45,7 +45,6 @@ public class RockObject : MonoBehaviour {
 			{
 				Rock.velocity = new Vector2 (xSpeed, -MaxSpeedY);
 			}
-			Debug.Log ("RockonGround");
 
 		}
 	}
