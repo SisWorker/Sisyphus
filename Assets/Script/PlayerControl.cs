@@ -126,7 +126,7 @@ public class PlayerControl : MonoBehaviour {
 		//move=move.normalized;
 		Rbody.velocity = move;
 
-
+		Debug.Log (Rbody.velocity);
 	}
 
 
@@ -163,6 +163,7 @@ public class PlayerControl : MonoBehaviour {
 			withWheel = true;
 			//Debug.Log ("withWheel");
 		}
+	
 					
 			
 	}
@@ -185,6 +186,20 @@ public class PlayerControl : MonoBehaviour {
 		if (other.gameObject.CompareTag ("Wheel"))
 			withWheel = false;
 
+	}
+	void OnCollisionEnter2D(Collision2D other)
+	{
+		if (other.gameObject.CompareTag ("MovingPlatform"))
+		{
+			transform.parent = other.transform;
+		}
+	}
+	void  OnCollisionExit2D(Collision2D other)
+	{
+		if (other.gameObject.CompareTag ("MovingPlatform"))
+		{
+			transform.parent = null;
+		}
 	}
 
 	//flip the sprite

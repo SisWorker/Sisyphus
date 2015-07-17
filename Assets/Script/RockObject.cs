@@ -69,7 +69,10 @@ public class RockObject : MonoBehaviour {
 		{
 			onGround = true;
 		}
-
+		if (other.gameObject.CompareTag ("MovingPlatform"))
+		{
+			transform.parent = other.transform;
+		}
 
 
 	}
@@ -85,6 +88,10 @@ public class RockObject : MonoBehaviour {
 		if (other.gameObject.layer == 8)
 		{
 			onGround = false;
+		}
+		if (other.gameObject.CompareTag ("MovingPlatform"))
+		{
+			transform.parent = null;
 		}
 
 

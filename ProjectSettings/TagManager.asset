@@ -9,6 +9,7 @@ TagManager:
   - Top
   - Slope
   - Wheel
+  - MovingPlatform
   layers:
   - Default
   - TransparentFX
