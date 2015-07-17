@@ -82,7 +82,7 @@ public class RockObject : MonoBehaviour {
 		if (other.gameObject.CompareTag ("Player")) {
 			MaxSpeed = 8f;
 			playerContact = false;
-			//Debug.Log ("outP");
+			//Debug.Log ("outP.");
 		}
 
 		if (other.gameObject.layer == 8)
