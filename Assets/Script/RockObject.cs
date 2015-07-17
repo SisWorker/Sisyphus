@@ -96,6 +96,20 @@ public class RockObject : MonoBehaviour {
 
 
 	}
+	void OnCollisionEnter2D(Collision2D other)
+	{
+		if (other.gameObject.CompareTag ("MovingPlatform"))
+		{
+			transform.parent = other.transform;
+		}
+	}
+	void  OnCollisionExit2D(Collision2D other)
+	{
+		if (other.gameObject.CompareTag ("MovingPlatform"))
+		{
+			transform.parent = null;
+		}
+	}
 
 
 }
