@@ -26,3 +26,23 @@ ver 0.04
 
 ver 0.05
 	solved the raycast and move downward problem
+	
+	problem:
+	
+	1. rock's contact check circle is not bigger than rock collider itself, and is not set as a trigger. the rock is also not tagged as "rockContact"
+		therefore animation not triggered when player contact rock
+
+	
+	
+ver 0.06
+	1. rock contact problem solved
+	
+	2. adjusted player collider positions so player can seem like walking on the ground
+	
+	3. added a circle collider to player so rock will not overlap with player sprite when on steep slope
+	
+	4. rock no longer freeze rotation
+	
+	5. rock gravity scale changed to 3, so it will no longer bounce off player into the air when sliding down hill and hit player. looks heavier too.
+	
+	6. 
