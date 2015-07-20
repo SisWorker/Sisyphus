@@ -10,6 +10,7 @@ TagManager:
   - Slope
   - Wheel
   - MovingPlatform
+  - PlatformController
   layers:
   - Default
   - TransparentFX

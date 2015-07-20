@@ -20,6 +20,7 @@ public class PlayerControl : MonoBehaviour {
 	private bool contactRock;
 	private bool onSlope;
 	private bool withWheel;
+	private bool withPlatformController;
 
 	private bool facingRight;
 
@@ -163,6 +164,19 @@ public class PlayerControl : MonoBehaviour {
 			withWheel = true;
 			//Debug.Log ("withWheel");
 		}
+		if (other.gameObject.CompareTag ("PlatformController")) 
+		{
+			if (Input.GetAxis ("Interact") != 0)
+
+			{
+				other.gameObject.GetComponentInParent<MovingPlatform>().MoveOn ();
+
+			}
+		}
+		if (other.gameObject.CompareTag ("MovingPlatform"))
+		{
+			transform.parent = other.transform;
+		}
 	
 					
 			
@@ -185,17 +199,6 @@ public class PlayerControl : MonoBehaviour {
 		}
 		if (other.gameObject.CompareTag ("Wheel"))
 			withWheel = false;
-
-	}
-	void OnCollisionEnter2D(Collision2D other)
-	{
-		if (other.gameObject.CompareTag ("MovingPlatform"))
-		{
-			transform.parent = other.transform;
-		}
-	}
-	void  OnCollisionExit2D(Collision2D other)
-	{
 		if (other.gameObject.CompareTag ("MovingPlatform"))
 		{
 			transform.parent = null;

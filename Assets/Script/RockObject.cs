@@ -11,24 +11,20 @@ public class RockObject : MonoBehaviour {
 	private bool playerContact;
 	private bool onSlope;
 	private bool onGround;
-
-
-	private bool onMovingPlatform;
-	private MovingPlatform PlatformScript;
-
+	private bool onPlatform;
+	private Vector3 offset;
 
 	void Start () {
 		Rock = GetComponent<Rigidbody2D>();
 		ejectRock = new Vector3 (40f, 60f, 0.0f);
 		playerContact = false;
 		onGround = false;
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (onMovingPlatform) {
-			transform.position = transform.position - PlatformScript.getMoveDir();
-		}
+
 
 
 
@@ -57,6 +53,13 @@ public class RockObject : MonoBehaviour {
 			}
 
 		}
+
+	}
+	void LateUpdate()
+	{
+		if (onPlatform) {
+			transform.position = transform.position + offset;
+		}
 	}
 
 	void OnTriggerEnter2D(Collider2D other)
@@ -72,27 +75,21 @@ public class RockObject : MonoBehaviour {
 		{
 			MaxSpeed=4.5f;
 			playerContact=true;
-			//Debug.Log("withP");
 		}
 
 		if (other.gameObject.layer == 8)
 		{
 			onGround = true;
 		}
-		if (other.gameObject.CompareTag ("MovingPlatform"))
-		{
-			transform.parent = other.transform;
-		}
-
-
+	
 	}
+
 
 	void OnTriggerExit2D(Collider2D other)
 	{
 		if (other.gameObject.CompareTag ("Player")) {
 			MaxSpeed = 8f;
-			playerContact = false;
-			//Debug.Log ("outP.");
+
 		}
 
 		if (other.gameObject.layer == 8)
@@ -101,28 +98,11 @@ public class RockObject : MonoBehaviour {
 		}
 		if (other.gameObject.CompareTag ("MovingPlatform"))
 		{
-			transform.parent = null;
+			onPlatform = false;
 		}
 
+	}
 
-	}
-	void OnCollisionEnter2D(Collision2D other)
-	{
-		if (other.gameObject.CompareTag ("MovingPlatform"))
-		{
-			onMovingPlatform = true;
-			PlatformScript = other.gameObject.GetComponentInParent<MovingPlatform>();
-			PlatformScript.test();
-
-		}
-	}
-	void  OnCollisionExit2D(Collision2D other)
-	{
-		if (other.gameObject.CompareTag ("MovingPlatform"))
-		{
-			onMovingPlatform = false;
-		}
-	}
 
 
 }
