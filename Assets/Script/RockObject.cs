@@ -13,6 +13,9 @@ public class RockObject : MonoBehaviour {
 	private bool onGround;
 
 
+	private bool onMovingPlatform;
+	private MovingPlatform PlatformScript;
+
 
 	void Start () {
 		Rock = GetComponent<Rigidbody2D>();
@@ -23,6 +26,13 @@ public class RockObject : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
+		if (onMovingPlatform) {
+			transform.position = transform.position - PlatformScript.getMoveDir();
+		}
+
+
+
+
 		float ySpeed = Rock.velocity.y;
 		float xSpeed = Rock.velocity.x;
 
@@ -100,14 +110,17 @@ public class RockObject : MonoBehaviour {
 	{
 		if (other.gameObject.CompareTag ("MovingPlatform"))
 		{
-			transform.parent = other.transform;
+			onMovingPlatform = true;
+			PlatformScript = other.gameObject.GetComponentInParent<MovingPlatform>();
+			PlatformScript.test();
+
 		}
 	}
 	void  OnCollisionExit2D(Collision2D other)
 	{
 		if (other.gameObject.CompareTag ("MovingPlatform"))
 		{
-			transform.parent = null;
+			onMovingPlatform = false;
 		}
 	}
 

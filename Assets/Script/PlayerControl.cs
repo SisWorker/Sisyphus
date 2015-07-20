@@ -126,7 +126,7 @@ public class PlayerControl : MonoBehaviour {
 		//move=move.normalized;
 		Rbody.velocity = move;
 
-		Debug.Log (Rbody.velocity);
+		//Debug.Log (Rbody.velocity);
 	}
 
 
