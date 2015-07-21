@@ -377,7 +377,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 850007954}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffd1b97e8f5434a34a92a1beb4b1aa4d, type: 3}
+  m_Script: {fileID: 11500000, guid: 44c26f1373ef94b3680769fecc6f9608, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &881705449
@@ -662,8 +662,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 850007959}
-        m_MethodName: changeScene
-        m_Mode: 5
+        m_MethodName: LevelSelect
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
