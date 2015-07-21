@@ -8,6 +8,9 @@ TagManager:
   - RockContact
   - Top
   - Slope
+  - Wheel
+  - MovingPlatform
+  - PlatformController
   layers:
   - Default
   - TransparentFX
