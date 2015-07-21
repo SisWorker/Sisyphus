@@ -17,28 +17,31 @@ public class MovingPlatform : MonoBehaviour {
 
 	private Transform WallR;
 	private Transform WallL;
-	private Rigidbody2D rb;
+	private int WallCount;
 	// Use this for initialization
 	void Start () {
+		for(int i = 0; i < points.Length;i++)
+		{
+			points[i].GetComponent<SpriteRenderer>().enabled=false;
+		}
 		currentPoint = points [pointSelection];
 		Moving = false;
-		WallR = transform.Find ("Platform").transform.Find ("WallR");
-		WallL = transform.Find ("Platform").transform.Find ("WallL");
-		rb = transform.Find ("Platform").GetComponent<Rigidbody2D> ();
+		WallR = transform.Find ("Platform").transform.Find ("Walls").transform.Find ("WallR");
+		WallL = transform.Find ("Platform").transform.Find("Walls").transform.Find("WallL");
+		WallCount = 0;
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		MovingDir = new Vector3(0,0,0);
 		if (Moving) 
 		{
-			rb.MovePosition (Vector3.MoveTowards (platform.transform.position, currentPoint.position, Time.deltaTime * moveSpeed));
-			//Debug.Log("1 "+ MovingDir);
-			//Debug.Log("2 "+ platform.transform.position);
+			MovingDir = platform.transform.position - Vector3.MoveTowards (platform.transform.position, currentPoint.position, Time.deltaTime * moveSpeed);
+			platform.transform.position = Vector3.MoveTowards (platform.transform.position, currentPoint.position, Time.deltaTime * moveSpeed);
 		}
 		if (platform.transform.position == currentPoint.position) 
 		{
 			Moving = false;
-			WallsDown ();
 			pointSelection++;
 			if(pointSelection == points.Length)
 			{
@@ -47,21 +50,28 @@ public class MovingPlatform : MonoBehaviour {
 			currentPoint = points[pointSelection];
 		}
 	}
-	void WallsUp()
+	void FixedUpdate()
 	{
-			WallR.localScale += new Vector3(0, 1.7F, 0);
-			WallL.localScale += new Vector3(0, 1.7F, 0);
-	}
-	void WallsDown()
-	{
-		WallR.localScale += new Vector3(0, -1.7F, 0);
-		WallL.localScale += new Vector3(0, -1.7F, 0);
+		if (Moving) {
+			if (WallCount < 50) {
+				WallR.transform.position += new Vector3 (0, 0.05f, 0);
+				WallL.transform.position += new Vector3 (0, 0.05f, 0);
+				WallCount++;
+			}
+		
+		} else {
+			if(WallCount >0)
+			{
+				WallR.transform.position -= new Vector3 (0, 0.05f, 0);
+				WallL.transform.position -= new Vector3 (0, 0.05f, 0);
+				WallCount--;
+			}
+		}
 	}
 	public void MoveOn()
 	{
 		if (Moving == false) {
 			Moving = true;
-			WallsUp ();
 		}
 	}
 	public Vector3 GetMoveDir()

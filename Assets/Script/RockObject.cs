@@ -58,7 +58,7 @@ public class RockObject : MonoBehaviour {
 	void LateUpdate()
 	{
 		if (onPlatform) {
-			transform.position = transform.position + offset;
+			transform.position = transform.position - offset;
 		}
 	}
 
@@ -81,7 +81,20 @@ public class RockObject : MonoBehaviour {
 		{
 			onGround = true;
 		}
+		if (other.gameObject.CompareTag ("MovingPlatform"))
+		{
+			onPlatform = true;
+			offset = other.gameObject.GetComponentInParent<MovingPlatform>().GetMoveDir();
+		}
 	
+	}
+
+	void OnTriggerStay2D(Collider2D other)
+	{
+		if (other.gameObject.CompareTag ("MovingPlatform"))
+		{
+			offset = other.gameObject.GetComponentInParent<MovingPlatform>().GetMoveDir();
+		}
 	}
 
 
