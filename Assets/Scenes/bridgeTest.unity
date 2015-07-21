@@ -814,35 +814,35 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 407266, guid: f1416c310b521450698fc3369751d099, type: 2}
+    - target: {fileID: 470712, guid: f1416c310b521450698fc3369751d099, type: 2}
       propertyPath: m_LocalPosition.x
       value: 47.7999992
       objectReference: {fileID: 0}
-    - target: {fileID: 407266, guid: f1416c310b521450698fc3369751d099, type: 2}
+    - target: {fileID: 470712, guid: f1416c310b521450698fc3369751d099, type: 2}
       propertyPath: m_LocalPosition.y
       value: 5.30000019
       objectReference: {fileID: 0}
-    - target: {fileID: 407266, guid: f1416c310b521450698fc3369751d099, type: 2}
+    - target: {fileID: 470712, guid: f1416c310b521450698fc3369751d099, type: 2}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 407266, guid: f1416c310b521450698fc3369751d099, type: 2}
+    - target: {fileID: 470712, guid: f1416c310b521450698fc3369751d099, type: 2}
       propertyPath: m_LocalRotation.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 407266, guid: f1416c310b521450698fc3369751d099, type: 2}
+    - target: {fileID: 470712, guid: f1416c310b521450698fc3369751d099, type: 2}
       propertyPath: m_LocalRotation.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 407266, guid: f1416c310b521450698fc3369751d099, type: 2}
+    - target: {fileID: 470712, guid: f1416c310b521450698fc3369751d099, type: 2}
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 407266, guid: f1416c310b521450698fc3369751d099, type: 2}
+    - target: {fileID: 470712, guid: f1416c310b521450698fc3369751d099, type: 2}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 407266, guid: f1416c310b521450698fc3369751d099, type: 2}
+    - target: {fileID: 470712, guid: f1416c310b521450698fc3369751d099, type: 2}
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
