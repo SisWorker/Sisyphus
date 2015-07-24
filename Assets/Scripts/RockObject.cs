@@ -65,6 +65,9 @@ public class RockObject : MonoBehaviour {
 	void OnTriggerEnter2D(Collider2D other)
 	{
 		//eject rock when reach top
+		if (other.gameObject.CompareTag ("Bridge")) {
+
+		}
 		if (other.gameObject.CompareTag ("Top")) {
 			Rock.velocity = ejectRock;
 			ms.Proceed ();
@@ -73,7 +76,7 @@ public class RockObject : MonoBehaviour {
 		//slow when touching player
 		if (other.gameObject.CompareTag ("Player"))
 		{
-			MaxSpeed=4.5f;
+			MaxSpeed=5.5f;
 			playerContact=true;
 		}
 

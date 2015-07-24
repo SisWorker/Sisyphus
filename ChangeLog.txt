@@ -41,3 +41,8 @@ ver 0.07 --7/16
 	2. added input botton "interact", the key is E.
 	3. canceled player's ability to jump while pushing rock.
 	4. saved sevral important gameObjects as prefabs.
+
+ver 0.08 --7/24
+	1. changed the bridge control that not it use colliderContact to stop at certain points;
+	2. updated the wall prefab that caused play to stick on wall;
+	3. now uses raycast to do groundCheck for jumping, fixed the potential problem of flying

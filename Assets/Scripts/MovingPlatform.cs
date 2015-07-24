@@ -18,6 +18,7 @@ public class MovingPlatform : MonoBehaviour {
 	private Transform WallR;
 	private Transform WallL;
 	private int WallCount;
+
 	// Use this for initialization
 	void Start () {
 		for(int i = 0; i < points.Length;i++)
@@ -49,6 +50,7 @@ public class MovingPlatform : MonoBehaviour {
 			}
 			currentPoint = points[pointSelection];
 		}
+
 	}
 	void FixedUpdate()
 	{

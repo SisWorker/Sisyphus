@@ -4,17 +4,17 @@ using System.Collections;
 public class WheelControl : MonoBehaviour {
 	public bool Working;
 	public float RotateTime;
-	public float TimePassed;
-	
+
+	public GameObject bridge;
 
 
 	private Vector3 origin;
 	private Vector3 ZAxis = new Vector3 (0f, 0f, 1f);
 	private GameObject player;
-	private GameObject bridge;
+	private float TimePassed;
 
 	private PlayerControl playerScript;
-	private BridgeControl bridgeScript;
+	private ImproveBridge bridgeScript;
 
 
 
@@ -22,10 +22,11 @@ public class WheelControl : MonoBehaviour {
 	void Start () {
 
 		player = GameObject.Find ("Player");
-		bridge = GameObject.Find ("bridge");
+
+		//bridge = GameObject.Find ("bridge");
 
 		playerScript = player.GetComponent<PlayerControl> ();
-		bridgeScript = bridge.GetComponent<BridgeControl> ();
+		bridgeScript = bridge.GetComponent<ImproveBridge> ();
 
 		origin = transform.position;
 
