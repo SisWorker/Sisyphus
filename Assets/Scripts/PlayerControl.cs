@@ -21,7 +21,7 @@ public class PlayerControl : MonoBehaviour {
 	private bool onSlope;
 	private bool withWheel;
 	private bool withPlatformController;
-
+	private bool pushing;
 	private bool facingRight;
 
 	private int speedLog;
@@ -52,23 +52,14 @@ public class PlayerControl : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () 
 	{
-
-		animator.SetBool ("PushRock", false);
 		Operating = false;
 
+		// detetermine whether to jump
+		Jump ();
 
-	 //  player jump when key is pressed and is on ground or on rock.
-		if ((Input.GetAxis ("Jump") != 0) & ((onGround) || (contactRock))) 
-		{
-			//cannot jump while pushing 
-			if (! ((onGround) && (contactRock)))
-			{
-				float xSpeed = Rbody.velocity.x;
-				Rbody.velocity = new Vector3 (xSpeed, jumpForce, 0.0f);
-			}
-		}
 
 		//get move input
+
 		float ySpeed = Rbody.velocity.y;
 		float moveHorizontal = Input.GetAxis ("Horizontal");
 
@@ -87,7 +78,7 @@ public class PlayerControl : MonoBehaviour {
 			Vector2 origin= new Vector2 (transform.position.x, (transform.position.y-1.1f));
 			Vector2 Direction= new Vector2(moveHorizontal, 0.0f);
 			//Ray2D myRay=new Ray2D(origin,Direction);
-			Debug.DrawRay(new Vector3 (transform.position.x, (transform.position.y-1.1f),0.1f), new Vector3(moveHorizontal*10f,0.0f,0.0f));
+			//Debug.DrawRay(new Vector3 (transform.position.x, (transform.position.y-1.1f),0.1f), new Vector3(moveHorizontal*5f,0.0f,0.0f));
 
 			if (Input.GetAxis ("Interact") != 0)
 
@@ -103,8 +94,8 @@ public class PlayerControl : MonoBehaviour {
 			//go down 30 degree when going down a slope;
 			if (onSlope)
 			{
-				bool ray=Physics2D.Raycast(origin,Direction, 10f,myLayer);
-				Debug.Log(ray);
+				bool ray=Physics2D.Raycast(origin,Direction, 5f,myLayer);
+				//Debug.Log(ray);
 				if (( !ray) && (moveHorizontal != 0))
 				{
 					move = new Vector3((moveHorizontal*speed/1.1f),(-(0.75f)*speed*0.3f+ySpeed), 0.0f);
@@ -127,9 +118,38 @@ public class PlayerControl : MonoBehaviour {
 		//move=move.normalized;
 		Rbody.velocity = move;
 
-		//Debug.Log (Rbody.velocity);
 	}
 
+
+
+	void Jump()
+		//use raycast to determine whether is onGruond
+	{
+		Vector2 origin1= new Vector2 ((transform.position.x-0.4f), (transform.position.y-1.3f));
+		Vector2 origin2= new Vector2 ((transform.position.x+0.4f), (transform.position.y-1.3f));
+		Vector2 Down= new Vector2(0.0f, -0.5f);
+		Debug.DrawRay(new Vector3 ((transform.position.x-0.4f), (transform.position.y-1.3f),0.1f), new Vector3 (0f,(-0.5f),0f));
+		Debug.DrawRay(new Vector3 ((transform.position.x+0.4f), (transform.position.y-1.3f),0.1f), new Vector3 (0f,(-0.5f),0f));
+
+		int playerLayer = 1 << 9;
+		playerLayer = ~playerLayer;
+
+		bool canJump=((Physics2D.Raycast(origin1, Down , -0.5f, playerLayer))||(Physics2D.Raycast(origin2, Down , -0.5f, playerLayer)));
+
+		//Debug.Log (canJump);
+
+		Debug.Log (pushing);
+		//  player jump when key is pressed and is on ground or on rock.
+		if ((Input.GetAxis ("Jump") != 0) && (canJump)) 
+		{
+			//cannot jump while pushing 
+			if (!pushing)
+			{
+				float xSpeed = Rbody.velocity.x;
+				Rbody.velocity = new Vector3 (xSpeed, jumpForce, 0.0f);
+			}
+		}
+	}
 
 
 
@@ -151,6 +171,7 @@ public class PlayerControl : MonoBehaviour {
 			{
 				animator.SetBool ("PushRock", true);
 				speed=speedLog/8*5;
+				pushing=true;
 			}
 			//if stand on stone
 			else
@@ -189,16 +210,21 @@ public class PlayerControl : MonoBehaviour {
 		{
 			onGround = false;
 			onSlope=false;
-
+			pushing=false;
+			animator.SetBool ("PushRock", false);
 		}
 
 		if (other.gameObject.CompareTag ("RockContact"))
 		{
 			contactRock=false;
 			speed=speedLog;
+			pushing=false;
+			animator.SetBool ("PushRock", false);
 		}
+
 		if (other.gameObject.CompareTag ("Wheel"))
 			withWheel = false;
+
 		if (other.gameObject.CompareTag ("MovingPlatform"))
 		{
 			transform.parent = null;

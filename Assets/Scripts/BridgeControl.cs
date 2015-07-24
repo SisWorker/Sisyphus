@@ -7,6 +7,7 @@ public class BridgeControl : MonoBehaviour {
 	public float RotateTime;
 	public float TimePassed;
 
+
 	Vector3 origin = new Vector3 (-4f, -8.1f, 0f);
 	Vector3 ZAxis = new Vector3 (0f, 0f, 1f);
 
@@ -31,7 +32,7 @@ public class BridgeControl : MonoBehaviour {
 		RotateTime = 1.5f;
 		TimePassed = 0f;
 
-		position = 1;
+		position = 0;
 	
 	}
 	
