@@ -12,10 +12,15 @@ public class ImproveBridge : MonoBehaviour {
 
 	public int curStop;
 
+	public bool rockOnBridge = false;
+	public bool throwRock = false;
+
 	//origin of rotation.
 	public Transform pivot;
 
 	private Vector3 origin;
+
+	private Rigidbody2D Rock;
 
 	private Vector3 ZAxis = new Vector3 (0f, 0f, 1f);
 	private int position;
@@ -26,6 +31,8 @@ public class ImproveBridge : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
+		Rock = GameObject.Find ("rock").GetComponent<Rigidbody2D> ();
+
 		NoFricBridge = transform.Find ("NoFricBridge").gameObject;
 		NoFricBridge.SetActive (false);
 
@@ -48,6 +55,15 @@ public class ImproveBridge : MonoBehaviour {
 		if (Working) 
 		{
 			Rotate (curStop);
+
+
+		}
+
+		if (throwRock == true) 
+		{
+			Rock.AddForce(new Vector2(500f,1000f));
+			throwRock = false;
+			
 		}
 
 
@@ -56,13 +72,21 @@ public class ImproveBridge : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-	
-
+		if(other.gameObject.CompareTag("RockContact"))
+			
+		{
+			rockOnBridge = true;
+			
+		}
 	}
 	void OnTriggerExit2D(Collider2D other)
 	{
-
+		if (other.gameObject.CompareTag ("RockContact"))
+		{
+			rockOnBridge = false;
+		}
 	}
+
 
 
 	void Rotate(int pos)

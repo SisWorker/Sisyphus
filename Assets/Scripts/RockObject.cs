@@ -33,25 +33,29 @@ public class RockObject : MonoBehaviour {
 		float xSpeed = Rock.velocity.x;
 
 
-		if (Rock.velocity.x > MaxSpeed) 
+		if (onGround == true)
 		{
-			Rock.velocity = new Vector2(MaxSpeed, ySpeed);
-		}
-		if (Rock.velocity.x < (-MaxSpeed) )
-		{
-			Rock.velocity = new Vector2(-MaxSpeed, ySpeed);
-		}
-		if ((playerContact))
-		{
-			if (Rock.velocity.y > MaxSpeedY)
-			{
-				Rock.velocity = new Vector2 (xSpeed, MaxSpeedY);
-			}
-			if (Rock.velocity.y < (-MaxSpeedY)) 
-			{
-				Rock.velocity = new Vector2 (xSpeed, -MaxSpeedY);
-			}
+			Rock.drag = 1.5f;
 
+			if (Rock.velocity.x > MaxSpeed) {
+				Rock.velocity = new Vector2 (MaxSpeed, ySpeed);
+			}
+			if (Rock.velocity.x < (-MaxSpeed)) {
+				Rock.velocity = new Vector2 (-MaxSpeed, ySpeed);
+			}
+			if ((playerContact)) {
+				if (Rock.velocity.x > MaxSpeed) {
+					Rock.velocity = new Vector2 (MaxSpeed, MaxSpeedY);
+				}
+				if (Rock.velocity.y < (-MaxSpeed)) {
+					Rock.velocity = new Vector2 (MaxSpeed, -MaxSpeedY);
+				}
+				
+			}
+		} 
+		else 
+		{
+			Rock.drag = 0f;
 		}
 
 	}

@@ -780,6 +780,10 @@ Prefab:
       propertyPath: TheBridge
       value: 
       objectReference: {fileID: 1022356276}
+    - target: {fileID: 11483004, guid: 36dae78218ce4de49a604255028f46c6, type: 2}
+      propertyPath: rockThrowingPoint
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 36dae78218ce4de49a604255028f46c6, type: 2}
   m_IsPrefabParent: 0
@@ -1149,6 +1153,10 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 11483004, guid: 36dae78218ce4de49a604255028f46c6, type: 2}
       propertyPath: Number
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 11483004, guid: 36dae78218ce4de49a604255028f46c6, type: 2}
+      propertyPath: rockThrowingPoint
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
