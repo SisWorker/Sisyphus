@@ -4,8 +4,6 @@ using System.Collections;
 public class PlayerControl : MonoBehaviour {
 
 	public int speed;
-	public float x;
-	public float y;
 	public int jumpForce;
 	public Rigidbody2D Rock;
 	private Rigidbody2D Rbody;
@@ -23,11 +21,16 @@ public class PlayerControl : MonoBehaviour {
 	private bool withPlatformController;
 	private bool pushing;
 	private bool facingRight;
+	private bool canJump;
 
 	private int speedLog;
+	private float moveHorizontal;
+	private float xSpeed;
+	private float ySpeed;
 
 	private Vector3 groundEulerAngle;
 	private Vector3 move;
+	private RaycastHit2D hit;
 
 
 	// Use this for initialization
@@ -35,8 +38,6 @@ public class PlayerControl : MonoBehaviour {
 	{
 		Rbody = GetComponent<Rigidbody2D> ();
 		animator = GetComponent<Animator>();
-		x = 0.1f;
-		y = -0.0f;
 		onGround = false;
 		contactRock = false;
 		onSlope = false;
@@ -54,17 +55,14 @@ public class PlayerControl : MonoBehaviour {
 	{
 		Operating = false;
 
-		// detetermine whether to jump
-		Jump ();
-
+		// detetermine whether is onground and whether canjump
+		IsOnGround ();
 
 		//get move input
-
-		float ySpeed = Rbody.velocity.y;
-		float moveHorizontal = Input.GetAxis ("Horizontal");
-
+		ySpeed = Rbody.velocity.y;
+		xSpeed = Rbody.velocity.x;
+        moveHorizontal = Input.GetAxis ("Horizontal");
 		move = new Vector3 ((moveHorizontal)*speed,(ySpeed),0.0f);
-
 
 		//flip accoring to move direction
 		if (moveHorizontal > 0 && !facingRight)
@@ -72,164 +70,145 @@ public class PlayerControl : MonoBehaviour {
 		else if (moveHorizontal < 0 && facingRight)
 			Flip ();
 
+
 		if (onGround) 
 		{
-			int myLayer = 1 << 8;
-			Vector2 origin= new Vector2 (transform.position.x, (transform.position.y-1.1f));
-			Vector2 Direction= new Vector2(moveHorizontal, 0.0f);
-			//Ray2D myRay=new Ray2D(origin,Direction);
-			//Debug.DrawRay(new Vector3 (transform.position.x, (transform.position.y-1.1f),0.1f), new Vector3(moveHorizontal*5f,0.0f,0.0f));
+			//determine whether to push rock;
+			PushRock();
 
+			// operate wheel if has the input and is onground.
 			if (Input.GetAxis ("Interact") != 0)
-
 			{
-				//Debug.Log("operating");
-
 				if (withWheel)
 					Operating=true;
 			}
 
-
-
 			//go down 30 degree when going down a slope;
 			if (onSlope)
 			{
-				bool ray=Physics2D.Raycast(origin,Direction, 5f,myLayer);
-				//Debug.Log(ray);
-				if (( !ray) && (moveHorizontal != 0))
-				{
-					move = new Vector3((moveHorizontal*speed/1.1f),(-(0.75f)*speed*0.3f+ySpeed), 0.0f);
-
-					//Debug.Log(hit.collider.tag);
-					Debug.Log ("going down");
-				}
-				else 
-					move = new Vector3((moveHorizontal*speed/1.1f),ySpeed,0.0f);
-
+				OnSlopeMovement();
 			}  
-
 		}
 
-		if (moveHorizontal!=0.0f)
-			animator.SetBool("Walking", true);
-		else
-			animator.SetBool("Walking",false);
+		Jump ();
+
+		SetAnimation ();
 
 		//move=move.normalized;
 		Rbody.velocity = move;
 
 	}
 
-
-
-	void Jump()
-		//use raycast to determine whether is onGruond
+	void OnSlopeMovement()
 	{
+		int myLayer = 1 << 11;
+		Vector2 origin= new Vector2 (transform.position.x, (transform.position.y-1.1f));
+		Vector2 Direction= new Vector2(moveHorizontal, 0.0f);
+		//Debug.DrawRay(new Vector3 (transform.position.x, (transform.position.y-1.1f),0.1f), new Vector3(moveHorizontal*5f,0.0f,0.0f));
+		bool ray=Physics2D.Raycast(origin,Direction, 5f,myLayer);
+		if (( !ray) && (moveHorizontal != 0))
+		{
+			move = new Vector3((moveHorizontal*speed/1.15f),(-(0.75f)*speed*0.3f+ySpeed), 0.0f);
+		}
+		else 
+			move = new Vector3((moveHorizontal*speed/1.15f),ySpeed,0.0f);
+	}
+
+
+	void IsOnGround()
+	{
+		onGround = false;
+
+		//use raycast to determine whether is onGruond
+		//use two raycasts to assure accuracy
+
 		Vector2 origin1= new Vector2 ((transform.position.x-0.4f), (transform.position.y-1.3f));
 		Vector2 origin2= new Vector2 ((transform.position.x+0.4f), (transform.position.y-1.3f));
 		Vector2 Down= new Vector2(0.0f, -0.5f);
 		Debug.DrawRay(new Vector3 ((transform.position.x-0.4f), (transform.position.y-1.3f),0.1f), new Vector3 (0f,(-0.5f),0f));
 		Debug.DrawRay(new Vector3 ((transform.position.x+0.4f), (transform.position.y-1.3f),0.1f), new Vector3 (0f,(-0.5f),0f));
-
+		
 		int playerLayer = 1 << 9;
 		playerLayer = ~playerLayer;
+		int GroundLayer = 1 << 11;
+		
+		RaycastHit2D hit1;
+		RaycastHit2D hit2;
+		
+		hit1=Physics2D.Raycast(origin1, Down , -0.5f, playerLayer);
+		hit2=Physics2D.Raycast(origin2, Down , -0.5f, playerLayer);
+		canJump = hit1 || hit2;
 
-		bool canJump=((Physics2D.Raycast(origin1, Down , -0.5f, playerLayer))||(Physics2D.Raycast(origin2, Down , -0.5f, playerLayer)));
+		//hit = Physics2D.Raycast (new Vector2 (transform.position.x, (transform.position.y-1.35f)), Down, -0.9f, GroundLayer);
+		//Debug.DrawRay(new Vector3 ((transform.position.x), (transform.position.y-1.35f),0.1f), new Vector3 (0f,(-0.9f),0f));
+		
+		//Debug.Log ("onground:"+onGround);
+		if (canJump) 
+		{
+			//Debug.Log("hit");
+			if (hit1)
+			{
+				if (hit1.collider.gameObject.layer == 11) 
+				{
+					onGround = true;
+				}
+			}
+			if (hit2)
+			{
+				if (hit2.collider.gameObject.layer == 11) 
+				{
+					onGround = true;
+				}
+			}
+		}
+	}
 
-		//Debug.Log (canJump);
 
-		Debug.Log (pushing);
+	void Jump()
+
+	{
 		//  player jump when key is pressed and is on ground or on rock.
 		if ((Input.GetAxis ("Jump") != 0) && (canJump)) 
 		{
+
 			//cannot jump while pushing 
 			if (!pushing)
 			{
-				float xSpeed = Rbody.velocity.x;
-				Rbody.velocity = new Vector3 (xSpeed, jumpForce, 0.0f);
+				xSpeed = Rbody.velocity.x;
+				move = new Vector3 (xSpeed, jumpForce, 0.0f);
 			}
 		}
 	}
 
 
-
-	// when colliding with other objects, change state bools
-	void OnTriggerStay2D(Collider2D other)
+	void PushRock()
 	{
+		pushing = false;
 
-		if (other.gameObject.layer == 8) 
+		Vector2 Direction= new Vector2(moveHorizontal, 0.0f);
+		int RockLayer = 1 << 10;
+		RaycastHit2D hitRock = Physics2D.Raycast (new Vector2 ((transform.position.x + (0.5f * moveHorizontal)), (transform.position.y + 0.6f)), Direction, 1f, RockLayer);
+		Debug.DrawRay (new Vector3 ((transform.position.x + (0.5f * moveHorizontal)), (transform.position.y + 0.6f), 0.1f), new Vector3 (moveHorizontal * 1f, 0.0f, 0.0f));
+		
+		if (hitRock) 
 		{
-			onGround = true;
-
-			if (other.gameObject.CompareTag ("Slope"))
-				onSlope=true;
-
+			pushing = true;
 		}
-		if (other.gameObject.CompareTag ("RockContact"))
-		{	
-			if (onGround)
-			{
-				animator.SetBool ("PushRock", true);
-				speed=speedLog/8*5;
-				pushing=true;
-			}
-			//if stand on stone
+	}
+
+
+	void SetAnimation()
+	{
+		if (pushing == false) 
+		{
+			if (moveHorizontal!=0.0f)
+				animator.SetBool("Walking", true);
 			else
-			{
-				contactRock = true;
-			}
+				animator.SetBool("Walking",false);
 		}
-
-		if (other.gameObject.CompareTag ("Wheel")) 
-		{
-			withWheel = true;
-			//Debug.Log ("withWheel");
-		}
-		if (other.gameObject.CompareTag ("PlatformController")) 
-		{
-			if (Input.GetAxis ("Interact") != 0)
-
-			{
-				other.gameObject.GetComponentInParent<MovingPlatform>().MoveOn ();
-
-			}
-		}
-		if (other.gameObject.CompareTag ("MovingPlatform"))
-		{
-			transform.parent = other.transform;
-		}
-	
-					
-			
+		animator.SetBool ("PushRock", pushing);
 	}
 
-	// change state bools back when leaving other objects
-	void OnTriggerExit2D(Collider2D other)
-	{
-		if (other.gameObject.layer == 8)
-		{
-			onGround = false;
-			onSlope=false;
-			pushing=false;
-			animator.SetBool ("PushRock", false);
-		}
-
-		if (other.gameObject.CompareTag ("RockContact"))
-		{
-			contactRock=false;
-			speed=speedLog;
-			pushing=false;
-			animator.SetBool ("PushRock", false);
-		}
-
-		if (other.gameObject.CompareTag ("Wheel"))
-			withWheel = false;
-
-		if (other.gameObject.CompareTag ("MovingPlatform"))
-		{
-			transform.parent = null;
-		}
-	}
 
 	//flip the sprite
 	void Flip()
@@ -239,4 +218,69 @@ public class PlayerControl : MonoBehaviour {
 		theScale.x *= -1;
 		transform.localScale = theScale;
 	}	
+
+
+	// when colliding with other objects, change state bools
+	void OnTriggerStay2D(Collider2D other)
+	{
+		
+		if (other.gameObject.layer == 11) 
+		{	
+			if (other.gameObject.CompareTag ("Slope"))
+				onSlope=true;
+		}
+
+		if (other.gameObject.CompareTag ("RockContact"))
+		{	
+			if (onGround)
+			{
+				speed=speedLog/8*5;
+			}
+
+			//if stand on stone
+			contactRock = true;
+		}
+		
+		if (other.gameObject.CompareTag ("Wheel")) 
+		{
+			withWheel = true;
+			//Debug.Log ("withWheel");
+		}
+		if (other.gameObject.CompareTag ("PlatformController")) 
+		{
+			if (Input.GetAxis ("Interact") != 0)
+				
+			{
+				other.gameObject.GetComponentInParent<MovingPlatform>().MoveOn ();
+			}
+		}
+		if (other.gameObject.CompareTag ("MovingPlatform"))
+		{
+			transform.parent = other.transform;
+		}	
+	}
+
+	
+	// change state bools back when leaving other objects
+	void OnTriggerExit2D(Collider2D other)
+	{
+		if (other.gameObject.layer == 11)
+		{
+			onSlope=false;
+		}
+		
+		if (other.gameObject.CompareTag ("RockContact"))
+		{
+			contactRock=false;
+			speed=speedLog;
+		}
+		
+		if (other.gameObject.CompareTag ("Wheel"))
+			withWheel = false;
+		
+		if (other.gameObject.CompareTag ("MovingPlatform"))
+		{
+			transform.parent = null;
+		}
+	}
 }

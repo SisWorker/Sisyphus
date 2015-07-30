@@ -11,7 +11,7 @@ GameObject:
   - 212: {fileID: 21249424}
   - 58: {fileID: 5849922}
   - 114: {fileID: 11432830}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: wheel
   m_TagString: Wheel
   m_Icon: {fileID: 0}
@@ -25,7 +25,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 113514}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -13.3000002, y: -5.30000019, z: 0}
+  m_LocalPosition: {x: -13.2999973, y: -5.29999828, z: 0}
   m_LocalScale: {x: .12939769, y: .133603245, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -56,7 +56,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Working: 0
   RotateTime: 0
-  TimePassed: 0
   bridge: {fileID: 0}
 --- !u!212 &21249424
 SpriteRenderer:

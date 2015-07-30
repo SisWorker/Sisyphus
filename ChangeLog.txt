@@ -1,0 +1,62 @@
+Boting 7/13:
+
+ver 0.04 
+
+	1. added slope tag, using layer to differentiate ground
+
+
+	2.rock heavier:
+
+		player move at lower speed when pushing rock
+
+		rock now has a speed limit, and the limit is lowered when being pushed by player
+
+		
+	3.player sprite now can flip according to moving direction.
+
+	4.player can jump on rock to slow and stop rock's movement, can freeze rock on a slope.
+
+	problem: 
+
+	5.player's speed on slope needs to eb normalized, it is moving faster than intended on slope.
+
+	
+	6.tried to used raycast to dected upward slope and downward slope, did not work out very well.
+	also the downward movement is not smooth when a downward force is added.
+
+ver 0.05
+	solved the raycast and move downward problem
+
+ver 0.06--7/15
+
+	1. sloved the bug that rock tends to float up when being pushed upward by limiting its y speed
+	2. sloved the hiden bug caused by vector that player acctually move faster when moving on slope
+	3. changed pushing speed to make the game more smooth
+	4. added a polygon collider to player that player now looks more like walking on ground
+
+ver 0.07 --7/16
+	1. added wheel and bridge. bridge belongs to ground layer and spins to a centain degree 
+	while player interact with wheel.
+	2. bridge's tag change to slope when forms a slope.
+	2. added input botton "interact", the key is E.
+	3. canceled player's ability to jump while pushing rock.
+	4. saved sevral important gameObjects as prefabs.
+
+ver 0.08 --7/24
+	1. changed the bridge control that not it use colliderContact to stop at certain points;
+	2. updated the wall prefab that caused play to stick on wall;
+	3. now uses raycast to do groundCheck for jumping, fixed the potential problem of flying
+
+ver 0.09-- 7/29
+	1. used 2d platform effctor to slopes and flats
+	2. added rigidbody to bridge to make them more stable
+	3. imporved player onground detection
+
+ver 0.10 --7/30
+	1. used raycast to detect player-rock contact, now player only push rock when is onground and moving toward
+	rock's direction
+	2. added a rock layer
+	3. updated several prefabs for minor improvements
+	4. updated the animator and the boolean control, player's pushing animation now display properly when going complicated terrains
+	5. reorganized the playercontrol scipt for stability and readability.
+	6. improved the bridge to make it automatically behave as wall, slope or ground depending on its angle.
