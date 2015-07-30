@@ -12,7 +12,7 @@ GameObject:
   - 60: {fileID: 6062044}
   - 60: {fileID: 6081926}
   - 251: {fileID: 25169510}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: slope
   m_TagString: Slope
   m_Icon: {fileID: 0}
@@ -26,7 +26,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 146088}
   m_LocalRotation: {x: 0, y: 0, z: -.258819073, w: .965925813}
-  m_LocalPosition: {x: -27.2800007, y: -2.45000005, z: 0}
+  m_LocalPosition: {x: -13.9509821, y: 5.26986217, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}

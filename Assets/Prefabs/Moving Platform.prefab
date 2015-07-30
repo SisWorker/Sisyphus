@@ -10,7 +10,7 @@ GameObject:
   - 4: {fileID: 458490}
   - 212: {fileID: 21246204}
   - 61: {fileID: 6160760}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Platform
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -26,7 +26,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 428688}
   - 212: {fileID: 21214650}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -42,7 +42,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 486282}
   - 61: {fileID: 6144792}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PlatformArea
   m_TagString: MovingPlatform
   m_Icon: {fileID: 0}
@@ -59,7 +59,7 @@ GameObject:
   - 4: {fileID: 486826}
   - 212: {fileID: 21294438}
   - 61: {fileID: 6191624}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: WallR
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -77,7 +77,7 @@ GameObject:
   - 212: {fileID: 21224926}
   - 61: {fileID: 6146312}
   - 114: {fileID: 11484828}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - 4: {fileID: 456284}
   - 212: {fileID: 21242764}
   - 60: {fileID: 6091550}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: PlatformController
   m_TagString: PlatformController
   m_Icon: {fileID: 0}
@@ -110,7 +110,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 443472}
   - 212: {fileID: 21257782}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Point1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -126,7 +126,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 400704}
   - 212: {fileID: 21275296}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Point2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -143,7 +143,7 @@ GameObject:
   - 4: {fileID: 462844}
   - 212: {fileID: 21211092}
   - 61: {fileID: 6199380}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: WallL
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -159,7 +159,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 421132}
   - 114: {fileID: 11432932}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: Moving Platform
   m_TagString: MovingPlatform
   m_Icon: {fileID: 0}
@@ -239,7 +239,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100776}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 17.5, y: 12.1000004, z: 0}
   m_LocalScale: {x: 12, y: 6, z: 1}
   m_Children:
   - {fileID: 428688}

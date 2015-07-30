@@ -12,7 +12,7 @@ GameObject:
   - 60: {fileID: 6055960}
   - 60: {fileID: 6007050}
   - 251: {fileID: 25146624}
-  m_Layer: 8
+  m_Layer: 11
   m_Name: flatground
   m_TagString: Ground
   m_Icon: {fileID: 0}
@@ -26,8 +26,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 158692}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -42.1399994, y: -6.98999977, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: -18.6309814, y: 10.2098618, z: 0}
+  m_LocalScale: {x: 2, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0

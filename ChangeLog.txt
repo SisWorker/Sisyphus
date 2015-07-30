@@ -47,8 +47,16 @@ ver 0.08 --7/24
 	2. updated the wall prefab that caused play to stick on wall;
 	3. now uses raycast to do groundCheck for jumping, fixed the potential problem of flying
 
-ver 0.09-- 7/30
+ver 0.09-- 7/29
 	1. used 2d platform effctor to slopes and flats
 	2. added rigidbody to bridge to make them more stable
 	3. imporved player onground detection
 
+ver 0.10 --7/30
+	1. used raycast to detect player-rock contact, now player only push rock when is onground and moving toward
+	rock's direction
+	2. added a rock layer
+	3. updated several prefabs for minor improvements
+	4. updated the animator and the boolean control, player's pushing animation now display properly when going complicated terrains
+	5. reorganized the playercontrol scipt for stability and readability.
+	6. improved the bridge to make it automatically behave as wall, slope or ground depending on its angle.
