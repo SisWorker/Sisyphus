@@ -46,3 +46,9 @@ ver 0.08 --7/24
 	1. changed the bridge control that not it use colliderContact to stop at certain points;
 	2. updated the wall prefab that caused play to stick on wall;
 	3. now uses raycast to do groundCheck for jumping, fixed the potential problem of flying
+
+ver 0.09-- 7/30
+	1. used 2d platform effctor to slopes and flats
+	2. added rigidbody to bridge to make them more stable
+	3. imporved player onground detection
+

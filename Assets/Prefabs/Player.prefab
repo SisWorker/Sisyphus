@@ -14,8 +14,8 @@ GameObject:
   - 212: {fileID: 21296630}
   - 58: {fileID: 5827568}
   - 60: {fileID: 6014074}
-  - 60: {fileID: 6098478}
-  m_Layer: 0
+  - 60: {fileID: 6017006}
+  m_Layer: 9
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -29,7 +29,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 156324}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 44.4000015, y: 14.1000004, z: 0}
+  m_LocalPosition: {x: -45, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -84,28 +84,36 @@ PolygonCollider2D:
       - {x: -.60818553, y: -.897809863}
       - {x: -.888142467, y: -.535965085}
       - {x: -.787225008, y: .609375775}
---- !u!60 &6098478
+--- !u!60 &6017006
 PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 156324}
   m_Enabled: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: b835200b8e3a96448b786a7c3d1f513c, type: 2}
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   m_Points:
     m_Paths:
-    - - {x: -.503864288, y: .895769835}
-      - {x: 0, y: 1.13092422}
-      - {x: .638713837, y: .866437435}
-      - {x: .95105654, y: .309016973}
-      - {x: .587785184, y: -.809017062}
-      - {x: -.0290966034, y: -1.3099637}
-      - {x: -.587785363, y: -.809016943}
-      - {x: -1.00670433, y: .0437326431}
-      - {x: -.95105648, y: .309017122}
+    - - {x: -.666503906, y: .816224813}
+      - {x: -.016336441, y: 1.15667462}
+      - {x: .462589264, y: .933423936}
+      - {x: .624065399, y: .827847183}
+      - {x: .763923645, y: .684324145}
+      - {x: .906578064, y: .491633505}
+      - {x: 1.01416397, y: .185818255}
+      - {x: 1.03247452, y: -.215278372}
+      - {x: .900100708, y: -.563270152}
+      - {x: .730430603, y: -.882501423}
+      - {x: -.0245094299, y: -1.30310261}
+      - {x: -.620140076, y: -.897809863}
+      - {x: -.906078339, y: -.535965085}
+      - {x: -1.04703522, y: -.161054641}
+      - {x: -1.04706192, y: .101437584}
+      - {x: -.940196991, y: .472896874}
+      - {x: -.84103775, y: .65721184}
 --- !u!95 &9596836
 Animator:
   serializedVersion: 3

@@ -4,8 +4,6 @@ using System.Collections;
 public class PlayerControl : MonoBehaviour {
 
 	public int speed;
-	public float x;
-	public float y;
 	public int jumpForce;
 	public Rigidbody2D Rock;
 	private Rigidbody2D Rbody;
@@ -28,6 +26,7 @@ public class PlayerControl : MonoBehaviour {
 
 	private Vector3 groundEulerAngle;
 	private Vector3 move;
+	private RaycastHit2D hit;
 
 
 	// Use this for initialization
@@ -35,8 +34,6 @@ public class PlayerControl : MonoBehaviour {
 	{
 		Rbody = GetComponent<Rigidbody2D> ();
 		animator = GetComponent<Animator>();
-		x = 0.1f;
-		y = -0.0f;
 		onGround = false;
 		contactRock = false;
 		onSlope = false;
@@ -101,7 +98,7 @@ public class PlayerControl : MonoBehaviour {
 					move = new Vector3((moveHorizontal*speed/1.1f),(-(0.75f)*speed*0.3f+ySpeed), 0.0f);
 
 					//Debug.Log(hit.collider.tag);
-					Debug.Log ("going down");
+					//Debug.Log ("going down");
 				}
 				else 
 					move = new Vector3((moveHorizontal*speed/1.1f),ySpeed,0.0f);
@@ -125,20 +122,51 @@ public class PlayerControl : MonoBehaviour {
 	void Jump()
 		//use raycast to determine whether is onGruond
 	{
+		//use two raycasts to assure accuracy
 		Vector2 origin1= new Vector2 ((transform.position.x-0.4f), (transform.position.y-1.3f));
 		Vector2 origin2= new Vector2 ((transform.position.x+0.4f), (transform.position.y-1.3f));
 		Vector2 Down= new Vector2(0.0f, -0.5f);
 		Debug.DrawRay(new Vector3 ((transform.position.x-0.4f), (transform.position.y-1.3f),0.1f), new Vector3 (0f,(-0.5f),0f));
 		Debug.DrawRay(new Vector3 ((transform.position.x+0.4f), (transform.position.y-1.3f),0.1f), new Vector3 (0f,(-0.5f),0f));
 
+
 		int playerLayer = 1 << 9;
 		playerLayer = ~playerLayer;
+		int GroundLayer = 1 << 8;
 
-		bool canJump=((Physics2D.Raycast(origin1, Down , -0.5f, playerLayer))||(Physics2D.Raycast(origin2, Down , -0.5f, playerLayer)));
+		RaycastHit2D hit1;
+		RaycastHit2D hit2;
 
-		//Debug.Log (canJump);
+		hit1=Physics2D.Raycast(origin1, Down , -0.5f, playerLayer);
+		hit2=Physics2D.Raycast(origin2, Down , -0.5f, playerLayer);
+		bool canJump = hit1 || hit2;
 
-		Debug.Log (pushing);
+		//hit = Physics2D.Raycast (new Vector2 (transform.position.x, (transform.position.y-1.35f)), Down, -0.9f, GroundLayer);
+		//Debug.DrawRay(new Vector3 ((transform.position.x), (transform.position.y-1.35f),0.1f), new Vector3 (0f,(-0.9f),0f));
+
+		//Debug.Log ("onground:"+onGround);
+
+		if (canJump) 
+		{
+			Debug.Log("hit");
+			if (hit1)
+			{
+				if (hit1.collider.gameObject.layer == 8) 
+				{
+					onGround = true;
+				}
+			}
+			if (hit2)
+			{
+				if (hit2.collider.gameObject.layer == 8) 
+				{
+					onGround = true;
+				}
+			}
+
+		}
+
+		//Debug.Log (pushing);
 		//  player jump when key is pressed and is on ground or on rock.
 		if ((Input.GetAxis ("Jump") != 0) && (canJump)) 
 		{
@@ -159,7 +187,7 @@ public class PlayerControl : MonoBehaviour {
 
 		if (other.gameObject.layer == 8) 
 		{
-			onGround = true;
+			//onGround = true;
 
 			if (other.gameObject.CompareTag ("Slope"))
 				onSlope=true;
@@ -174,10 +202,9 @@ public class PlayerControl : MonoBehaviour {
 				pushing=true;
 			}
 			//if stand on stone
-			else
-			{
-				contactRock = true;
-			}
+
+			contactRock = true;
+
 		}
 
 		if (other.gameObject.CompareTag ("Wheel")) 
