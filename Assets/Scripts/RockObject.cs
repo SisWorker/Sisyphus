@@ -84,7 +84,7 @@ public class RockObject : MonoBehaviour {
 			playerContact=true;
 		}
 
-		if (other.gameObject.layer == 8)
+		if (other.gameObject.layer == 11)
 		{
 			onGround = true;
 		}
@@ -112,7 +112,7 @@ public class RockObject : MonoBehaviour {
 
 		}
 
-		if (other.gameObject.layer == 8)
+		if (other.gameObject.layer == 11)
 		{
 			onGround = false;
 		}
