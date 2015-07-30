@@ -38,7 +38,6 @@ public class ImproveBridge : MonoBehaviour {
 		if ((bridgeRotation>80f)&&(bridgeRotation<100f))
 		{
 			NoFricBridge.SetActive(true);
-			Debug.Log("upward");
 		}
 	}
 	

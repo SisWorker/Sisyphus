@@ -44,12 +44,10 @@ public class StopPoint : MonoBehaviour {
 
 
 				bridgeRotation=TheBridge.transform.eulerAngles.z;
-				Debug.Log(bridgeRotation);
 
 				if ((bridgeRotation>80)&&(bridgeRotation<100))
 				{
 					TheBridge.transform.Find("NoFricBridge").gameObject.SetActive(true);
-					Debug.Log("upward");
 				}
 				else 
 				{
@@ -57,12 +55,10 @@ public class StopPoint : MonoBehaviour {
 
 					if(((bridgeRotation>170)&&(bridgeRotation<190))||((bridgeRotation>350)&&(bridgeRotation<360))||((bridgeRotation>0)&&(bridgeRotation<10)))
 					{
-						Debug.Log(" flat");
 						TheBridge.tag="Ground";
 					}
 					else
 					{
-						Debug.Log("slope");
 						TheBridge.tag="Slope";
 					}
 				}
