@@ -4,6 +4,7 @@ using System.Collections;
 public class StopPoint : MonoBehaviour {
 	public GameObject TheBridge;
 	public int Number;
+	public bool rockThrowingPoint = false;
 
 
 	private SpriteRenderer SR;
@@ -42,14 +43,21 @@ public class StopPoint : MonoBehaviour {
 					bridgeScript.curStop = 0;
 				}
 
+				//throw rock
+				if (rockThrowingPoint == true & bridgeScript.rockOnBridge == true)
+					
+				{
+					Debug.Log("throw!!!");
+					bridgeScript.throwRock = true;
+					
+				}
+
 
 				bridgeRotation=TheBridge.transform.eulerAngles.z;
-				Debug.Log(bridgeRotation);
 
-				if ((bridgeRotation>80)&&(bridgeRotation<100))
+				if ((bridgeRotation>85)&&(bridgeRotation<95))
 				{
 					TheBridge.transform.Find("NoFricBridge").gameObject.SetActive(true);
-					Debug.Log("upward");
 				}
 				else 
 				{
@@ -57,12 +65,10 @@ public class StopPoint : MonoBehaviour {
 
 					if(((bridgeRotation>170)&&(bridgeRotation<190))||((bridgeRotation>350)&&(bridgeRotation<360))||((bridgeRotation>0)&&(bridgeRotation<10)))
 					{
-						Debug.Log(" flat");
 						TheBridge.tag="Ground";
 					}
 					else
 					{
-						Debug.Log("slope");
 						TheBridge.tag="Slope";
 					}
 				}
