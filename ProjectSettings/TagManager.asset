@@ -12,6 +12,7 @@ TagManager:
   - MovingPlatform
   - PlatformController
   - Bridge
+  - PlatformGround
   layers:
   - Default
   - TransparentFX
@@ -21,7 +22,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - IgnorePlatformGround
   - Player
   - Rock
   - Ground

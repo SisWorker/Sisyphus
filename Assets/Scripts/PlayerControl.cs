@@ -56,7 +56,9 @@ public class PlayerControl : MonoBehaviour {
 		Operating = false;
 
 		// detetermine whether is onground and whether canjump
-		IsOnGround ();
+		if (gameObject.layer == 9) {
+			IsOnGround ();
+		}
 
 		//get move input
 		ySpeed = Rbody.velocity.y;
@@ -219,7 +221,8 @@ public class PlayerControl : MonoBehaviour {
 		transform.localScale = theScale;
 	}	
 
-
+	void OnTriggerEnter2D(Collider2D other){
+	}
 	// when colliding with other objects, change state bools
 	void OnTriggerStay2D(Collider2D other)
 	{
@@ -257,7 +260,15 @@ public class PlayerControl : MonoBehaviour {
 		if (other.gameObject.CompareTag ("MovingPlatform"))
 		{
 			transform.parent = other.transform;
-		}	
+		}
+		if(other.gameObject.CompareTag ("PlatformGround"))
+		{
+			if(Input.GetAxis ("Vertical")<0)
+			{
+
+				gameObject.layer = 8;
+			}
+		}
 	}
 
 	
@@ -281,6 +292,10 @@ public class PlayerControl : MonoBehaviour {
 		if (other.gameObject.CompareTag ("MovingPlatform"))
 		{
 			transform.parent = null;
+		}
+		if(other.gameObject.CompareTag ("PlatformGround"))
+		{
+			gameObject.layer = 9;
 		}
 	}
 }
