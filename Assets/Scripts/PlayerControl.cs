@@ -56,9 +56,7 @@ public class PlayerControl : MonoBehaviour {
 		Operating = false;
 
 		// detetermine whether is onground and whether canjump
-		if (gameObject.layer == 9) {
 			IsOnGround ();
-		}
 
 		//get move input
 		ySpeed = Rbody.velocity.y;
@@ -265,10 +263,11 @@ public class PlayerControl : MonoBehaviour {
 		{
 			if(Input.GetAxis ("Vertical")<0)
 			{
-
-				gameObject.layer = 8;
+				
+				other.gameObject.layer = 8;
 			}
 		}
+
 	}
 
 	
@@ -294,8 +293,10 @@ public class PlayerControl : MonoBehaviour {
 			transform.parent = null;
 		}
 		if(other.gameObject.CompareTag ("PlatformGround"))
-		{
-			gameObject.layer = 9;
+		{	
+			if(onGround)
+			other.gameObject.layer = 11;
 		}
+
 	}
 }
