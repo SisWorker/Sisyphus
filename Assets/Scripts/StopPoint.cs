@@ -47,7 +47,6 @@ public class StopPoint : MonoBehaviour {
 				if (rockThrowingPoint == true & bridgeScript.rockOnBridge == true)
 					
 				{
-					Debug.Log("throw!!!");
 					bridgeScript.throwRock = true;
 					
 				}
