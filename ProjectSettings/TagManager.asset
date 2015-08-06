@@ -12,7 +12,6 @@ TagManager:
   - MovingPlatform
   - PlatformController
   - Bridge
-  - PlatformGround
   layers:
   - Default
   - TransparentFX

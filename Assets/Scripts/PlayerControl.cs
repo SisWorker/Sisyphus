@@ -65,12 +65,9 @@ public class PlayerControl : MonoBehaviour {
 		move = new Vector3 ((moveHorizontal)*speed,(ySpeed),0.0f);
 
 		//flip accoring to move direction
-		if (moveHorizontal > 0 && !facingRight)
+		if ((moveHorizontal > 0 && !facingRight)||(moveHorizontal < 0 && facingRight) ){
 			Flip ();
-		else if (moveHorizontal < 0 && facingRight)
-			Flip ();
-
-
+		}
 		if (onGround) 
 		{
 			//determine whether to push rock;
@@ -96,6 +93,7 @@ public class PlayerControl : MonoBehaviour {
 
 		//move=move.normalized;
 		Rbody.velocity = move;
+
 
 	}
 
@@ -216,6 +214,7 @@ public class PlayerControl : MonoBehaviour {
 		facingRight = !facingRight;
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
+		transform.position = new Vector3(transform.position.x,transform.position.y+0.01f,transform.position.z);
 		transform.localScale = theScale;
 	}	
 
@@ -227,8 +226,18 @@ public class PlayerControl : MonoBehaviour {
 		
 		if (other.gameObject.layer == 11) 
 		{	
+			//PlatformGround
+			if(Input.GetAxis ("Vertical")<0)
+			{
+				
+				other.gameObject.layer = 8;
+			}
 			if (other.gameObject.CompareTag ("Slope"))
+			{
 				onSlope=true;
+			}
+
+
 		}
 
 		if (other.gameObject.CompareTag ("RockContact"))
@@ -259,14 +268,6 @@ public class PlayerControl : MonoBehaviour {
 		{
 			transform.parent = other.transform;
 		}
-		if(other.gameObject.CompareTag ("PlatformGround"))
-		{
-			if(Input.GetAxis ("Vertical")<0)
-			{
-				
-				other.gameObject.layer = 8;
-			}
-		}
 
 	}
 
@@ -291,11 +292,6 @@ public class PlayerControl : MonoBehaviour {
 		if (other.gameObject.CompareTag ("MovingPlatform"))
 		{
 			transform.parent = null;
-		}
-		if(other.gameObject.CompareTag ("PlatformGround"))
-		{	
-			if(onGround)
-			other.gameObject.layer = 11;
 		}
 
 	}

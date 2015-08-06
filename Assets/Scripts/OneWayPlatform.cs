@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PlatformGround : MonoBehaviour {
+public class OneWayPlatform : MonoBehaviour {
 
 	public bool RightDirect;
 
@@ -37,17 +37,7 @@ public class PlatformGround : MonoBehaviour {
 			Debug.Log ("Enter");
 		}
 	}
-	void OnTriggerStay2D(Collider2D other)
-	{
-		if(other.gameObject.CompareTag ("Player"))
-		{
-			if(Input.GetAxis ("Vertical")<0)
-			{
 
-				gameObject.layer = 8;
-			}
-		}
-	}
 	void OnTriggerExit2D(Collider2D other)
 	{
 
