@@ -2,6 +2,9 @@
 using System.Collections;
 
 public class PlatformGround : MonoBehaviour {
+
+	public bool RightDirect;
+
 	private int ExitCount;
 	private bool Exit;
 	// Use this for initialization

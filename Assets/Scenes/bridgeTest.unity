@@ -327,21 +327,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ac42e6abfee4c4bf1812e83c6f581390, type: 2}
   m_IsPrefabParent: 0
---- !u!1 &254171897 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 163846, guid: ac42e6abfee4c4bf1812e83c6f581390, type: 2}
-  m_PrefabInternal: {fileID: 392487021}
---- !u!114 &254171898
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 254171897}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b45516b77049b41fcbc94ec073bb49fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &254171903 stripped
 Transform:
   m_PrefabParentObject: {fileID: 471724, guid: ac42e6abfee4c4bf1812e83c6f581390, type: 2}
@@ -450,6 +435,10 @@ Prefab:
     - target: {fileID: 163846, guid: ac42e6abfee4c4bf1812e83c6f581390, type: 2}
       propertyPath: m_Name
       value: PlatformGround (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 11453554, guid: ac42e6abfee4c4bf1812e83c6f581390, type: 2}
+      propertyPath: RightDirect
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ac42e6abfee4c4bf1812e83c6f581390, type: 2}
@@ -1425,25 +1414,10 @@ Transform:
 Transform:
   m_PrefabParentObject: {fileID: 403558, guid: bf2f10e54e709a8418beb81460f45e3f, type: 2}
   m_PrefabInternal: {fileID: 1419607189}
---- !u!1 &1859337484 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 163846, guid: ac42e6abfee4c4bf1812e83c6f581390, type: 2}
-  m_PrefabInternal: {fileID: 90438024}
 --- !u!4 &1859337485 stripped
 Transform:
   m_PrefabParentObject: {fileID: 471724, guid: ac42e6abfee4c4bf1812e83c6f581390, type: 2}
   m_PrefabInternal: {fileID: 90438024}
---- !u!114 &1859337486
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1859337484}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b45516b77049b41fcbc94ec073bb49fd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1866470521 stripped
 Transform:
   m_PrefabParentObject: {fileID: 420600, guid: be34908d8d45c4e4e8ac5f1b4b234121, type: 2}
@@ -1648,7 +1622,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 404862, guid: 071f2b9584049495c9a0d9269fdc2e5d, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 11426066, guid: 071f2b9584049495c9a0d9269fdc2e5d, type: 2}
       propertyPath: Player
