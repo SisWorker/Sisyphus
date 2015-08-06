@@ -74,13 +74,13 @@ public class RockObject : MonoBehaviour {
 		BackForce = new Vector3 (-4, 0, 0);
 		if (backDirection) 
 		{
-			Debug.Log ("rightward!");
+			//Debug.Log ("rightward!");
 			BackForce = new Vector3 (4, 0f, 0);
 		}
 
 		if ((Counter >= SecondsToB) &&((Rock.velocity.x<MaxSpeed)&&(Rock.velocity.x>(-MaxSpeed))))
 		{
-			Debug.Log ("Burst!");
+			//Debug.Log ("Burst!");
 
 			Rock.AddForce(BackForce);
 		}
