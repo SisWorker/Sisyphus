@@ -116,7 +116,7 @@ public class PlayerControl : MonoBehaviour {
 	void IsOnGround()
 	{
 		onGround = false;
-
+		pushing = false;
 		//use raycast to determine whether is onGruond
 		//use two raycasts to assure accuracy
 
@@ -181,7 +181,7 @@ public class PlayerControl : MonoBehaviour {
 
 	void PushRock()
 	{
-		pushing = false;
+
 
 		Vector2 Direction= new Vector2(moveHorizontal, 0.0f);
 		int RockLayer = 1 << 10;

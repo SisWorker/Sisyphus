@@ -60,6 +60,7 @@ ver 0.10 --7/30
 	4. updated the animator and the boolean control, player's pushing animation now display properly when going complicated terrains
 	5. reorganized the playercontrol scipt for stability and readability.
 	6. improved the bridge to make it automatically behave as wall, slope or ground depending on its angle.
+
 ver 0.12--8/6
 	1. now player can go down through the platform by pressing down
 	2. now rock will roll back after a while not touched by player
