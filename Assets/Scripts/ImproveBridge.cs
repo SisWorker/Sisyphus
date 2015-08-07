@@ -108,7 +108,7 @@ public class ImproveBridge : MonoBehaviour {
 				CounterClock = -1;
 			}
 
-			float throwforce = Mathf.Abs(rotateSpeed[curStop]*diag*3.5f);
+			float throwforce = Mathf.Abs(rotateSpeed[curPos]*diag*0.5f);
 
 			float throwx = throwforce*sin*CounterClock;
 			float throwy = throwforce*cos*CounterClock;
@@ -148,7 +148,9 @@ public class ImproveBridge : MonoBehaviour {
 
 		this.tag = "Bridge";
 		transform.RotateAround (origin, ZAxis, rotateSpeed[pos] * Time.deltaTime);
-
+		if (rockOnBridge) {
+			Rock.transform.RotateAround (origin, ZAxis, rotateSpeed [pos] * Time.deltaTime);
+		}
 	}
 
 }
