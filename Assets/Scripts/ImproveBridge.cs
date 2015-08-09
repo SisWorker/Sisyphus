@@ -26,7 +26,7 @@ public class ImproveBridge : MonoBehaviour {
 	private int position;
 	private GameObject NoFricBridge;
 
-
+	private GameObject curStopObject;
 	
 	// Use this for initialization
 	void Start () 
@@ -61,7 +61,60 @@ public class ImproveBridge : MonoBehaviour {
 
 		if (throwRock == true) 
 		{
-			Rock.AddForce(new Vector2(500f,1000f));
+			float deltax = Rock.transform.position.x - pivot.transform.position.x;
+			float deltay = Rock.transform.position.y - pivot.transform.position.y;
+			float diag = Mathf.Sqrt(Mathf.Pow(deltax,2)+Mathf.Pow(deltay,2));
+			float sin = Mathf.Abs(deltay/diag);
+			float cos = Mathf.Abs(deltax/diag);
+			//sin-->throwing direction x component
+			//cos-->throwing y component
+			if(deltax>=0f)
+			{
+				if(deltay>=0f)
+				{
+					sin = -sin;
+				}
+
+			}
+			else
+			{
+				if(deltay>=0f)
+				{
+					sin = -sin;
+					cos = -cos;
+				}
+				else
+				{
+					cos = -cos;
+				}
+			}
+			int CounterClock = -1;
+
+			int curPos;
+			if(curStop!=0)
+			{
+				curPos = curStop-1;
+			}
+			else
+			{
+				curPos = rotateSpeed.Length-1;
+			}
+
+			if(rotateSpeed[curPos]>0)
+			{
+				CounterClock = 1;
+			}
+			else{
+				CounterClock = -1;
+			}
+
+			float throwforce = Mathf.Abs(rotateSpeed[curPos]*diag*0.5f);
+
+			float throwx = throwforce*sin*CounterClock;
+			float throwy = throwforce*cos*CounterClock;
+
+			Rock.AddForce(new Vector2(throwx,throwy));
+
 			throwRock = false;
 			
 		}
@@ -95,7 +148,9 @@ public class ImproveBridge : MonoBehaviour {
 
 		this.tag = "Bridge";
 		transform.RotateAround (origin, ZAxis, rotateSpeed[pos] * Time.deltaTime);
-
+		if (rockOnBridge) {
+			Rock.transform.RotateAround (origin, ZAxis, rotateSpeed [pos] * Time.deltaTime);
+		}
 	}
 
 }

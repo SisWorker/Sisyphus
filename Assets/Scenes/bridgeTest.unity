@@ -1075,7 +1075,11 @@ Prefab:
       objectReference: {fileID: 1022356276}
     - target: {fileID: 11483004, guid: 36dae78218ce4de49a604255028f46c6, type: 2}
       propertyPath: rockThrowingPoint
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11483004, guid: 36dae78218ce4de49a604255028f46c6, type: 2}
+      propertyPath: Number
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 36dae78218ce4de49a604255028f46c6, type: 2}
@@ -1499,26 +1503,14 @@ Prefab:
       propertyPath: m_RootOrder
       value: 2
       objectReference: {fileID: 0}
-    - target: {fileID: 11483004, guid: 36dae78218ce4de49a604255028f46c6, type: 2}
-      propertyPath: TheBridge
-      value: 
-      objectReference: {fileID: 1022356276}
     - target: {fileID: 116170, guid: 36dae78218ce4de49a604255028f46c6, type: 2}
       propertyPath: m_Name
       value: Stop1 (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 116170, guid: 36dae78218ce4de49a604255028f46c6, type: 2}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 11483004, guid: 36dae78218ce4de49a604255028f46c6, type: 2}
-      propertyPath: Number
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 11483004, guid: 36dae78218ce4de49a604255028f46c6, type: 2}
-      propertyPath: rockThrowingPoint
-      value: 0
-      objectReference: {fileID: 0}
+      propertyPath: TheBridge
+      value: 
+      objectReference: {fileID: 1022356276}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 36dae78218ce4de49a604255028f46c6, type: 2}
   m_IsPrefabParent: 0

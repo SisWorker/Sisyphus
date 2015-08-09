@@ -64,3 +64,7 @@ ver 0.10 --7/30
 ver 0.12--8/6
 	1. now player can go down through the platform by pressing down
 	2. now rock will roll back after a while not touched by player
+
+ver 0.13--8/10
+	1. completed the bridge throw mechanism
+	2. updated prefabs and added new scripts: sky, rockwall, ground, and rock.
