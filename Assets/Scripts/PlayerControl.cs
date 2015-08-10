@@ -56,7 +56,7 @@ public class PlayerControl : MonoBehaviour {
 		Operating = false;
 
 		// detetermine whether is onground and whether canjump
-		IsOnGround ();
+			IsOnGround ();
 
 		//get move input
 		ySpeed = Rbody.velocity.y;
@@ -65,12 +65,9 @@ public class PlayerControl : MonoBehaviour {
 		move = new Vector3 ((moveHorizontal)*speed,(ySpeed),0.0f);
 
 		//flip accoring to move direction
-		if (moveHorizontal > 0 && !facingRight)
+		if ((moveHorizontal > 0 && !facingRight)||(moveHorizontal < 0 && facingRight) ){
 			Flip ();
-		else if (moveHorizontal < 0 && facingRight)
-			Flip ();
-
-
+		}
 		if (onGround) 
 		{
 			//determine whether to push rock;
@@ -97,6 +94,7 @@ public class PlayerControl : MonoBehaviour {
 		//move=move.normalized;
 		Rbody.velocity = move;
 
+
 	}
 
 	void OnSlopeMovement()
@@ -118,7 +116,7 @@ public class PlayerControl : MonoBehaviour {
 	void IsOnGround()
 	{
 		onGround = false;
-
+		pushing = false;
 		//use raycast to determine whether is onGruond
 		//use two raycasts to assure accuracy
 
@@ -183,7 +181,7 @@ public class PlayerControl : MonoBehaviour {
 
 	void PushRock()
 	{
-		pushing = false;
+
 
 		Vector2 Direction= new Vector2(moveHorizontal, 0.0f);
 		int RockLayer = 1 << 10;
@@ -216,18 +214,30 @@ public class PlayerControl : MonoBehaviour {
 		facingRight = !facingRight;
 		Vector3 theScale = transform.localScale;
 		theScale.x *= -1;
+		transform.position = new Vector3(transform.position.x,transform.position.y+0.01f,transform.position.z);
 		transform.localScale = theScale;
 	}	
 
-
+	void OnTriggerEnter2D(Collider2D other){
+	}
 	// when colliding with other objects, change state bools
 	void OnTriggerStay2D(Collider2D other)
 	{
 		
 		if (other.gameObject.layer == 11) 
 		{	
+			//PlatformGround
+			if(Input.GetAxis ("Vertical")<0)
+			{
+				
+				other.gameObject.layer = 8;
+			}
 			if (other.gameObject.CompareTag ("Slope"))
+			{
 				onSlope=true;
+			}
+
+
 		}
 
 		if (other.gameObject.CompareTag ("RockContact"))
@@ -257,7 +267,8 @@ public class PlayerControl : MonoBehaviour {
 		if (other.gameObject.CompareTag ("MovingPlatform"))
 		{
 			transform.parent = other.transform;
-		}	
+		}
+
 	}
 
 	
@@ -282,5 +293,6 @@ public class PlayerControl : MonoBehaviour {
 		{
 			transform.parent = null;
 		}
+
 	}
 }

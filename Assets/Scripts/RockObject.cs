@@ -3,8 +3,14 @@ using System.Collections;
 
 public class RockObject : MonoBehaviour {
 
-	public Rigidbody2D Rock;
+	private Rigidbody2D Rock;
 	public UIDialog ms;
+
+	public float SecondsToB=5f;
+	private float Counter;
+	private Vector3 BackForce;
+	private bool backDirection;
+
 	private float MaxSpeed =8.0f;
 	private float MaxSpeedY =5.5f;
 	private Vector3 ejectRock;
@@ -12,22 +18,24 @@ public class RockObject : MonoBehaviour {
 	private bool onSlope;
 	private bool onGround;
 	private bool onPlatform;
+
+
 	private Vector3 offset;
 
-	void Start () {
+
+
+	void Start ()
+	{
 		Rock = GetComponent<Rigidbody2D>();
 		ejectRock = new Vector3 (40f, 60f, 0.0f);
 		playerContact = false;
 		onGround = false;
+		Counter = 0;
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
-
-
-
 
 		float ySpeed = Rock.velocity.y;
 		float xSpeed = Rock.velocity.x;
@@ -59,12 +67,51 @@ public class RockObject : MonoBehaviour {
 		}
 
 	}
+
+	void FixedUpdate()
+	{
+		//Rollback
+		BackForce = new Vector3 (-4, 0, 0);
+		if (backDirection) 
+		{
+			//Debug.Log ("rightward!");
+			BackForce = new Vector3 (4, 0f, 0);
+		}
+
+		if ((Counter >= SecondsToB) &&((Rock.velocity.x<MaxSpeed)&&(Rock.velocity.x>(-MaxSpeed))))
+		{
+			//Debug.Log ("Burst!");
+
+			Rock.AddForce(BackForce);
+		}
+
+		if ((playerContact))
+		{
+			//counter clears to 0 if being touched or moved
+			Counter = 0f;
+		}
+		else 
+		{
+			if (onGround&&(Rock.velocity.y==0))
+			{
+				//Counter accumulates when is alone and onground
+				Counter += 0.02f;
+				//Debug.Log ("Accel!");
+			}
+
+		}
+
+	}
+
+
 	void LateUpdate()
 	{
 		if (onPlatform) {
 			transform.position = transform.position - offset;
 		}
 	}
+
+
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
@@ -87,6 +134,10 @@ public class RockObject : MonoBehaviour {
 		if (other.gameObject.layer == 11)
 		{
 			onGround = true;
+			if (other.gameObject.tag!="Slope")
+			{
+				backDirection=other.gameObject.GetComponent<OneWayPlatform>().RightDirect;
+			}
 		}
 		if (other.gameObject.CompareTag ("MovingPlatform"))
 		{
@@ -109,7 +160,7 @@ public class RockObject : MonoBehaviour {
 	{
 		if (other.gameObject.CompareTag ("Player")) {
 			MaxSpeed = 8f;
-
+			playerContact = false;
 		}
 
 		if (other.gameObject.layer == 11)
