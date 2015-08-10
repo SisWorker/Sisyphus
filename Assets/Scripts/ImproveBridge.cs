@@ -31,7 +31,7 @@ public class ImproveBridge : MonoBehaviour {
 	// Use this for initialization
 	void Start () 
 	{
-		Rock = GameObject.Find ("rock").GetComponent<Rigidbody2D> ();
+		Rock = GameObject.Find ("Rock").GetComponent<Rigidbody2D> ();
 
 		NoFricBridge = transform.Find ("NoFricBridge").gameObject;
 		NoFricBridge.SetActive (false);
