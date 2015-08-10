@@ -23,7 +23,7 @@ public class SkyControll : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () 
 	{
-		OffsetX = (CameraLastX - Camera.transform.position.x) ;
+		OffsetX = (CameraLastX - Camera.transform.position.x)* 0.8f ;
 		OffsetY = (CameraLastY - Camera.transform.position.y) * 0.5f;
 
 		Offset = new Vector3 (-OffsetX, -OffsetY , 0f);
