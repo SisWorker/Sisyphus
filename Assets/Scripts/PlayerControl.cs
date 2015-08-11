@@ -15,22 +15,23 @@ public class PlayerControl : MonoBehaviour {
 	//private bool canJump;
 
 	private bool onGround;
-	private bool contactRock;
 	private bool onSlope;
 	private bool withWheel;
 	private bool withPlatformController;
 	private bool pushing;
 	private bool facingRight;
 	private bool canJump;
-	private bool canGoDown;
+	private bool jumping;
 
 	private int speedLog;
 	private float moveHorizontal;
 	private float xSpeed;
 	private float ySpeed;
-	private float lastJump;
-	private float downPressed;
+
 	private float downPressing;
+	private float jumpPressed;
+	private float jumpPressing;
+	private int jumpsAvailable;
 
 	private Vector3 groundEulerAngle;
 	private Vector3 move;
@@ -43,13 +44,10 @@ public class PlayerControl : MonoBehaviour {
 		Rbody = GetComponent<Rigidbody2D> ();
 		animator = GetComponent<Animator>();
 		onGround = false;
-		contactRock = false;
 		onSlope = false;
 		facingRight = false;
-		canGoDown = false;
-		Vector3 jump = new Vector3 (0.0f, jumpForce, 0.0f);
 		speedLog = speed;
-		lastJump = -1000f;
+		jumpsAvailable = 1;
 	}
 	
 
@@ -61,7 +59,7 @@ public class PlayerControl : MonoBehaviour {
 
 		// detetermine whether is onground and whether canjump
 		IsOnGround ();
-		DownCheck ();
+		KeyCheck ();
 		//get move input
 		ySpeed = Rbody.velocity.y;
 		xSpeed = Rbody.velocity.x;
@@ -99,8 +97,9 @@ public class PlayerControl : MonoBehaviour {
 
 
 	}
-	void DownCheck()
+	void KeyCheck()
 	{
+		//go down
 		if (Input.GetAxis ("Vertical") < 0&&onGround) {
 			downPressing += 0.02f;
 		} 
@@ -111,7 +110,11 @@ public class PlayerControl : MonoBehaviour {
 		if (downPressing > 0.52f) {
 			downPressing = 0;
 		}
-		Debug.Log (downPressing);
+
+		//jump
+		if (Input.GetAxis ("Jump")==0 && onGround) {
+			jumpsAvailable = 1;
+		}
 
 	}
 	void OnSlopeMovement()
@@ -145,7 +148,7 @@ public class PlayerControl : MonoBehaviour {
 		
 		int playerLayer = 1 << 9;
 		playerLayer = ~playerLayer;
-		int GroundLayer = 1 << 11;
+		//int GroundLayer = 1 << 11;
 		
 		RaycastHit2D hit1;
 		RaycastHit2D hit2;
@@ -183,15 +186,25 @@ public class PlayerControl : MonoBehaviour {
 
 	{
 		//  player jump when key is pressed and is on ground or on rock.
-		if ((Input.GetAxis ("Jump") != 0) && (canJump)) 
+		if (Input.GetAxis("Jump")!=0) 
 		{
 
 			//cannot jump while pushing 
-			if (!pushing&&(Time.fixedTime-lastJump)>0.82f)
+			if (!pushing&&jumpsAvailable>0&&canJump)
 			{
 				xSpeed = Rbody.velocity.x;
 				move = new Vector3 (xSpeed, jumpForce, 0.0f);
-				lastJump = Time.fixedTime;
+				jumpsAvailable -= 1;
+				jumpPressing = 0;
+				//lastJump = Time.fixedTime;
+			}
+			else if(!onGround)
+			{
+				jumpPressing += 0.02f;
+				if(jumpPressing>0.1f&&jumpPressing<0.4f&&Rbody.velocity.y>0)
+				{
+					move = new Vector3(xSpeed,ySpeed+0.59f-jumpPressing,0.0f);
+				}
 			}
 		}
 	}
@@ -246,10 +259,8 @@ public class PlayerControl : MonoBehaviour {
 		{	
 			//PlatformGround
 			if(downPressing>0.5f)
-			{
-				
+			{		
 				other.gameObject.layer = 8;
-				downPressed = Time.fixedTime - 0.3f;
 			}
 			if (other.gameObject.CompareTag ("Slope"))
 			{
@@ -265,9 +276,6 @@ public class PlayerControl : MonoBehaviour {
 			{
 				speed=speedLog/8*5;
 			}
-
-			//if stand on stone
-			contactRock = true;
 		}
 		
 		if (other.gameObject.CompareTag ("Wheel")) 
@@ -301,7 +309,6 @@ public class PlayerControl : MonoBehaviour {
 		
 		if (other.gameObject.CompareTag ("RockContact"))
 		{
-			contactRock=false;
 			speed=speedLog;
 		}
 		
