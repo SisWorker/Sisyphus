@@ -330,7 +330,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 470860, guid: 51813235be1c1433190d1284f5d32c02, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 8.60000038
+      value: 7.5999999
       objectReference: {fileID: 0}
     - target: {fileID: 470860, guid: 51813235be1c1433190d1284f5d32c02, type: 2}
       propertyPath: m_LocalPosition.z
@@ -354,11 +354,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 470860, guid: 51813235be1c1433190d1284f5d32c02, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 172218, guid: 51813235be1c1433190d1284f5d32c02, type: 2}
       propertyPath: m_Name
       value: OneWayPlatform (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 25136216, guid: 51813235be1c1433190d1284f5d32c02, type: 2}
+      propertyPath: m_UseSideFriction
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 51813235be1c1433190d1284f5d32c02, type: 2}

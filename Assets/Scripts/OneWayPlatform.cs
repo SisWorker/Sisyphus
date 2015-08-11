@@ -30,14 +30,6 @@ public class OneWayPlatform : MonoBehaviour {
 		}
 
 	}
-	void OnTriggerEnter2D(Collider2D other)
-	{
-		if(other.gameObject.CompareTag ("Player"))
-		{	
-			Debug.Log ("Enter");
-		}
-	}
-
 	void OnTriggerExit2D(Collider2D other)
 	{
 

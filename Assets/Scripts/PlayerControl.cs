@@ -22,11 +22,15 @@ public class PlayerControl : MonoBehaviour {
 	private bool pushing;
 	private bool facingRight;
 	private bool canJump;
+	private bool canGoDown;
 
 	private int speedLog;
 	private float moveHorizontal;
 	private float xSpeed;
 	private float ySpeed;
+	private float lastJump;
+	private float downPressed;
+	private float downPressing;
 
 	private Vector3 groundEulerAngle;
 	private Vector3 move;
@@ -42,22 +46,22 @@ public class PlayerControl : MonoBehaviour {
 		contactRock = false;
 		onSlope = false;
 		facingRight = false;
-
+		canGoDown = false;
 		Vector3 jump = new Vector3 (0.0f, jumpForce, 0.0f);
 		speedLog = speed;
-
+		lastJump = -1000f;
 	}
-
-
+	
 
 	// Update is called once per frame
 	void FixedUpdate () 
 	{
+
 		Operating = false;
 
 		// detetermine whether is onground and whether canjump
-			IsOnGround ();
-
+		IsOnGround ();
+		DownCheck ();
 		//get move input
 		ySpeed = Rbody.velocity.y;
 		xSpeed = Rbody.velocity.x;
@@ -84,9 +88,8 @@ public class PlayerControl : MonoBehaviour {
 			if (onSlope)
 			{
 				OnSlopeMovement();
-			}  
+			} 
 		}
-
 		Jump ();
 
 		SetAnimation ();
@@ -96,7 +99,21 @@ public class PlayerControl : MonoBehaviour {
 
 
 	}
+	void DownCheck()
+	{
+		if (Input.GetAxis ("Vertical") < 0&&onGround) {
+			downPressing += 0.02f;
+		} 
+		else
+		{
+			downPressing = 0;
+		}
+		if (downPressing > 0.52f) {
+			downPressing = 0;
+		}
+		Debug.Log (downPressing);
 
+	}
 	void OnSlopeMovement()
 	{
 		int myLayer = 1 << 11;
@@ -170,10 +187,11 @@ public class PlayerControl : MonoBehaviour {
 		{
 
 			//cannot jump while pushing 
-			if (!pushing)
+			if (!pushing&&(Time.fixedTime-lastJump)>0.82f)
 			{
 				xSpeed = Rbody.velocity.x;
 				move = new Vector3 (xSpeed, jumpForce, 0.0f);
+				lastJump = Time.fixedTime;
 			}
 		}
 	}
@@ -227,10 +245,11 @@ public class PlayerControl : MonoBehaviour {
 		if (other.gameObject.layer == 11) 
 		{	
 			//PlatformGround
-			if(Input.GetAxis ("Vertical")<0)
+			if(downPressing>0.5f)
 			{
 				
 				other.gameObject.layer = 8;
+				downPressed = Time.fixedTime - 0.3f;
 			}
 			if (other.gameObject.CompareTag ("Slope"))
 			{
