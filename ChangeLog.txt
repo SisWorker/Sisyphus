@@ -68,3 +68,8 @@ ver 0.12--8/6
 ver 0.13--8/10
 	1. completed the bridge throw mechanism
 	2. updated prefabs and added new scripts: sky, rockwall, ground, and rock.
+
+ver 0.14--8/14
+	1. imporved going down and jump mechanism
+	2. holding space will allow player to jump higher
+	3. now sky and cloud has layers and will move resonds ton player's movement differently.
