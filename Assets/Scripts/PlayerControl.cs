@@ -22,6 +22,7 @@ public class PlayerControl : MonoBehaviour {
 	private bool facingRight;
 	private bool canJump;
 	private bool jumping;
+	private bool onRock;
 
 	private int speedLog;
 	private float moveHorizontal;
@@ -112,8 +113,9 @@ public class PlayerControl : MonoBehaviour {
 		}
 
 		//jump
-		if (Input.GetAxis ("Jump")==0 && onGround) {
+		if (Input.GetAxis ("Jump")==0 && (onGround||onRock)) {
 			jumpsAvailable = 1;
+	
 		}
 
 	}
@@ -188,7 +190,10 @@ public class PlayerControl : MonoBehaviour {
 		//  player jump when key is pressed and is on ground or on rock.
 		if (Input.GetAxis("Jump")!=0) 
 		{
-
+			//Debug.Log ("pushing:"+pushing);
+			//Debug.Log ("jumpsAvailable:"+jumpsAvailable);
+			//Debug.Log ("canJump:"+canJump);
+			//Debug.Log ("onground:"+onGround);
 			//cannot jump while pushing 
 			if (!pushing&&jumpsAvailable>0&&canJump)
 			{
@@ -272,6 +277,7 @@ public class PlayerControl : MonoBehaviour {
 
 		if (other.gameObject.CompareTag ("RockContact"))
 		{	
+			onRock = true;
 			if (onGround)
 			{
 				speed=speedLog/8*5;
@@ -310,6 +316,7 @@ public class PlayerControl : MonoBehaviour {
 		if (other.gameObject.CompareTag ("RockContact"))
 		{
 			speed=speedLog;
+			onRock = false;
 		}
 		
 		if (other.gameObject.CompareTag ("Wheel"))
