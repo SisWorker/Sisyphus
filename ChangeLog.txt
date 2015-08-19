@@ -73,3 +73,7 @@ ver 0.14--8/14
 	1. imporved going down and jump mechanism
 	2. holding space will allow player to jump higher
 	3. now sky and cloud has layers and will move resonds ton player's movement differently.
+
+ver 0.15--8/19
+	1. added a raw version of pole
+	2. imrpoved the smoothness of sky movement

@@ -19,6 +19,7 @@ public class SkyControll : MonoBehaviour {
 	private GameObject Camera;
 	private GameObject CopyL;
 	private GameObject CopyR;
+	private Vector3 pos;
 
 	protected Vector3 Offset;
 	protected float OffsetX;
@@ -29,7 +30,7 @@ public class SkyControll : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
-		Camera = GameObject.Find ("Main Camera");
+		Camera = GameObject.Find ("Player");
 
 		CameraLastX = Camera.transform.position.x;
 		CameraLastY = Camera.transform.position.y;
@@ -39,7 +40,7 @@ public class SkyControll : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void FixedUpdate () 
+void LateUpdate () 
 	{
 
 		Float ();
@@ -47,6 +48,7 @@ public class SkyControll : MonoBehaviour {
 		Undraw ();
 		Detect ();
 
+		transform.position = pos;
 
 	}
 
@@ -57,12 +59,12 @@ public class SkyControll : MonoBehaviour {
 		
 		Offset = new Vector3 (-OffsetX, -OffsetY , 0f);
 		
-		transform.position = transform.position + Offset;
+		pos = pos + Offset;
 	}
 
 	void Float()
 	{
-		transform.position = (transform.position + new Vector3 ((FloatSpeed/200), 0, 0));
+		pos = (transform.position + new Vector3 ((FloatSpeed/2*Time.deltaTime), 0, 0));
 	}
 
 
