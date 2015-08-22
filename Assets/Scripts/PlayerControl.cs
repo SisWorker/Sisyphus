@@ -139,6 +139,7 @@ public class PlayerControl : MonoBehaviour {
 	{
 		onGround = false;
 		pushing = false;
+
 		//use raycast to determine whether is onGruond
 		//use two raycasts to assure accuracy
 
@@ -195,10 +196,12 @@ public class PlayerControl : MonoBehaviour {
 			//Debug.Log ("canJump:"+canJump);
 			//Debug.Log ("onground:"+onGround);
 			//cannot jump while pushing 
+			animator.SetBool("Jump",true);
 			if (!pushing&&jumpsAvailable>0&&canJump)
 			{
 				xSpeed = Rbody.velocity.x;
 				move = new Vector3 (xSpeed, jumpForce, 0.0f);
+
 				jumpsAvailable -= 1;
 				jumpPressing = 0;
 				//lastJump = Time.fixedTime;
@@ -241,6 +244,10 @@ public class PlayerControl : MonoBehaviour {
 				animator.SetBool("Walking",false);
 		}
 		animator.SetBool ("PushRock", pushing);
+		if (onGround) {
+			animator.SetBool ("Jump", false);
+		} 
+
 	}
 
 
