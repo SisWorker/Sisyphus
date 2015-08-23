@@ -12,6 +12,7 @@ TagManager:
   - MovingPlatform
   - PlatformController
   - Bridge
+  - PickUp
   layers:
   - Default
   - TransparentFX
@@ -25,7 +26,7 @@ TagManager:
   - Player
   - Rock
   - Ground
-  - 
+  - Geyser
   - 
   - 
   - 
@@ -48,4 +49,13 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Ground
+    uniqueID: 134085827
+    locked: 0
+  - name: Player&Rock
+    uniqueID: 2347269703
+    locked: 0
+  - name: Geyser
+    uniqueID: 4017409371
     locked: 0

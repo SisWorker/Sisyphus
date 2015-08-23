@@ -132,7 +132,7 @@ void LateUpdate ()
 
 		if (other.tag == "Player") 
 		{
-			Debug.Log("meetplayer");
+//			Debug.Log("meetplayer");
 			withPlayer=true;
 		}
 

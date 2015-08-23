@@ -15,6 +15,7 @@ public class Geyser : MonoBehaviour {
 	private Rigidbody2D Rock;
 	private float relativeHeight;
 	private float pushForceScale;
+	private Vector2 originalPosition; 
 	// Use this for initialization
 	void Start () {
 
@@ -23,7 +24,7 @@ public class Geyser : MonoBehaviour {
 		Active = false;
 		animator.SetBool ("Active", Active);
 		relativeHeight = 0f;
-
+		originalPosition = transform.position;
 	}
 	
 	// Update is called once per frame
@@ -55,11 +56,10 @@ public class Geyser : MonoBehaviour {
 
 	void OnTriggerStay2D(Collider2D other)
 	{
-		if(Active)
-		{
+		if (Active) {
 
-			if ((other.transform.position.y - transform.position.y) >= 0f) {
-				relativeHeight = other.transform.position.y - transform.position.y;
+			if ((other.transform.position.y - originalPosition.y) >= 0f) {
+				relativeHeight = other.transform.position.y - originalPosition.y;
 			} else {
 				relativeHeight = 0f;
 			}
@@ -67,27 +67,35 @@ public class Geyser : MonoBehaviour {
 			if (relativeHeight >= heightLimit) {
 				pushForceScale = 0f;
 			} else {
-				pushForceScale = Mathf.Pow(1-(relativeHeight/heightLimit),8);
+				pushForceScale = Mathf.Pow (1 - (relativeHeight / heightLimit), 8);
 			}
 
 
-			if((other.transform.position.x - transform.position.x) > 0f)
-			{
+			if ((other.transform.position.x - originalPosition.x) > 0f) {
 				horAdj = -1f;
-			}
-			else if((other.transform.position.x - transform.position.x) < 0f)
-			{
+			} else if ((other.transform.position.x - originalPosition.x) < 0f) {
 				horAdj = 1f;
-			}
-			else
-			{
+			} else {
 				horAdj = 0f;
 			}
 
 
 
-			other.attachedRigidbody.velocity = new Vector2(horAdj,heightLimit*0.5f*pushForceScale);
+			other.attachedRigidbody.velocity = new Vector2 (horAdj, heightLimit * 0.5f * pushForceScale);
 
+
+			Vector3 transition = new Vector3 (0f, other.transform.position.y - transform.position.y, 0f);
+			animator.transform.position += transition;
+
+
+	
+
+
+
+
+
+		} else {
+			transform.position = originalPosition;
 		}
 	}
 	void OnTriggerExit2D(Collider2D other)

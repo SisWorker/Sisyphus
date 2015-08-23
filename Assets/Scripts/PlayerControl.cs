@@ -37,13 +37,15 @@ public class PlayerControl : MonoBehaviour {
 	private Vector3 groundEulerAngle;
 	private Vector3 move;
 	private RaycastHit2D hit;
-
-
+	private GameObject pickUpObject;
+	private PickUpObject pickUpScript;
 	// Use this for initialization
 	void Start () 
 	{
 		Rbody = GetComponent<Rigidbody2D> ();
 		animator = GetComponent<Animator>();
+		pickUpObject = GameObject.Find("PickUpRock");
+		pickUpScript = pickUpObject.GetComponent<PickUpObject>();
 		onGround = false;
 		onSlope = false;
 		facingRight = false;
@@ -164,6 +166,15 @@ public class PlayerControl : MonoBehaviour {
 		//Debug.DrawRay(new Vector3 ((transform.position.x), (transform.position.y-1.35f),0.1f), new Vector3 (0f,(-0.9f),0f));
 		
 		//Debug.Log ("onground:"+onGround);
+
+		if (hit1.collider.gameObject.layer == 10 || hit2.collider.gameObject.layer == 10) {
+			onRock = true;
+		} else {
+			onRock = false;
+		}
+
+
+
 		if (canJump) 
 		{
 			//Debug.Log("hit");
@@ -173,6 +184,7 @@ public class PlayerControl : MonoBehaviour {
 				{
 					onGround = true;
 				}
+
 			}
 			if (hit2)
 			{
@@ -180,7 +192,9 @@ public class PlayerControl : MonoBehaviour {
 				{
 					onGround = true;
 				}
+
 			}
+
 		}
 	}
 
@@ -244,9 +258,10 @@ public class PlayerControl : MonoBehaviour {
 				animator.SetBool("Walking",false);
 		}
 		animator.SetBool ("PushRock", pushing);
-		if (onGround) {
+		if (onGround||onRock) {
 			animator.SetBool ("Jump", false);
 		} 
+
 
 	}
 
@@ -259,6 +274,13 @@ public class PlayerControl : MonoBehaviour {
 		theScale.x *= -1;
 		transform.position = new Vector3(transform.position.x,transform.position.y+0.01f,transform.position.z);
 		transform.localScale = theScale;
+
+		if (pickUpScript.pickedUp == true) 
+		{
+			pickUpScript.offSet = new Vector3(pickUpScript.offSet.x*(-1f),pickUpScript.offSet.y,0f);
+		}
+
+
 	}	
 
 	void OnTriggerEnter2D(Collider2D other){
@@ -320,7 +342,7 @@ public class PlayerControl : MonoBehaviour {
 			onSlope=false;
 		}
 		
-		if (other.gameObject.CompareTag ("RockContact"))
+		if (other.gameObject.CompareTag ("RockContact")||other.gameObject.CompareTag ("PickUp"))
 		{
 			speed=speedLog;
 			onRock = false;
