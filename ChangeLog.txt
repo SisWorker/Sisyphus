@@ -77,3 +77,9 @@ ver 0.14--8/14
 ver 0.15--8/19
 	1. added a raw version of pole
 	2. imrpoved the smoothness of sky movement
+
+ver 0.16--8/24
+	1. added aniamation to geyser
+	2. added pickable rock
+	3. pushed sky prefab to perfection
+	4. solved the framerate problem

@@ -55,8 +55,9 @@ public class PlayerControl : MonoBehaviour {
 	
 
 	// Update is called once per frame
-	void FixedUpdate () 
+	void Update () 
 	{
+		Debug.Log (1 / Time.deltaTime);
 
 		Operating = false;
 
