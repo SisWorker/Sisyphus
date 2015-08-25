@@ -5,11 +5,17 @@ public class PlayerControl : MonoBehaviour {
 
 	public int speed;
 	public int jumpForce;
-	public Rigidbody2D Rock;
 	private Rigidbody2D Rbody;
 	private Animator animator;
 
 	public bool Operating;
+
+	//pick up object related variables
+
+	public bool pickingUp;
+	private bool withAPickUpObj;
+	private bool canInteract;
+	private float pickUpCounter;
 
 	//private Vector3 antiGravity;
 	//private bool canJump;
@@ -19,7 +25,7 @@ public class PlayerControl : MonoBehaviour {
 	private bool withWheel;
 	private bool withPlatformController;
 	private bool pushing;
-	private bool facingRight;
+	public bool facingRight;
 	private bool canJump;
 	private bool jumping;
 	private bool onRock;
@@ -37,20 +43,19 @@ public class PlayerControl : MonoBehaviour {
 	private Vector3 groundEulerAngle;
 	private Vector3 move;
 	private RaycastHit2D hit;
-	private GameObject pickUpObject;
-	private PickUpObject pickUpScript;
+
 	// Use this for initialization
 	void Start () 
 	{
 		Rbody = GetComponent<Rigidbody2D> ();
 		animator = GetComponent<Animator>();
-		pickUpObject = GameObject.Find("PickUpRock");
-		pickUpScript = pickUpObject.GetComponent<PickUpObject>();
 		onGround = false;
 		onSlope = false;
 		facingRight = false;
 		speedLog = speed;
 		jumpsAvailable = 1;
+		pickingUp = false;
+		canInteract = true;
 	}
 	
 
@@ -80,9 +85,9 @@ public class PlayerControl : MonoBehaviour {
 			PushRock();
 
 			// operate wheel if has the input and is onground.
-			if (Input.GetAxis ("Interact") != 0)
+			if (Input.GetAxis ("Interact") != 0&&!pickingUp)
 			{
-				if (withWheel)
+				if (withWheel&&!withAPickUpObj)
 					Operating=true;
 			}
 
@@ -98,6 +103,10 @@ public class PlayerControl : MonoBehaviour {
 
 		//move=move.normalized;
 		Rbody.velocity = move;
+
+		PickUpTimer (1f);
+	
+
 
 
 	}
@@ -136,6 +145,25 @@ public class PlayerControl : MonoBehaviour {
 		else 
 			move = new Vector3((moveHorizontal*speed/1.15f),ySpeed,0.0f);
 	}
+
+
+	void PickUpTimer(float time)
+	{
+		if (!canInteract) 
+		{	
+			Debug.Log("Counter Working");
+			pickUpCounter += 0.02f;
+		}
+		if (pickUpCounter >= time) 
+		{
+			canInteract = true;
+			pickUpCounter = 0f;
+		}
+
+	}
+
+
+
 
 
 	void IsOnGround()
@@ -275,11 +303,7 @@ public class PlayerControl : MonoBehaviour {
 		theScale.x *= -1;
 		transform.position = new Vector3(transform.position.x,transform.position.y+0.01f,transform.position.z);
 		transform.localScale = theScale;
-
-		if (pickUpScript.pickedUp == true) 
-		{
-			pickUpScript.offSet = new Vector3(pickUpScript.offSet.x*(-1f),pickUpScript.offSet.y,0f);
-		}
+	
 
 
 	}	
@@ -289,7 +313,27 @@ public class PlayerControl : MonoBehaviour {
 	// when colliding with other objects, change state bools
 	void OnTriggerStay2D(Collider2D other)
 	{
+
+		if (other.gameObject.CompareTag ("PickUp")) 
+		{
+			withAPickUpObj = true;
+			if(Input.GetAxis("Interact")!=0&&canInteract&&!pickingUp)
+			{
+				canInteract = false;
+				pickingUp = true;
+
+			}
 		
+			if(Input.GetAxis("Interact")!=0&&canInteract&&pickingUp)
+			{
+				pickingUp = false;
+				canInteract = false;
+			}
+		
+		}
+
+
+
 		if (other.gameObject.layer == 11) 
 		{	
 			//PlatformGround
@@ -321,7 +365,7 @@ public class PlayerControl : MonoBehaviour {
 		}
 		if (other.gameObject.CompareTag ("PlatformController")) 
 		{
-			if (Input.GetAxis ("Interact") != 0)
+			if (Input.GetAxis ("Interact") != 0&&!pickingUp)
 				
 			{
 				other.gameObject.GetComponentInParent<MovingPlatform>().MoveOn ();
@@ -338,6 +382,12 @@ public class PlayerControl : MonoBehaviour {
 	// change state bools back when leaving other objects
 	void OnTriggerExit2D(Collider2D other)
 	{
+		if (other.gameObject.CompareTag ("PickUp")) 
+		{
+			withAPickUpObj = false;
+		}
+
+
 		if (other.gameObject.layer == 11)
 		{
 			onSlope=false;
