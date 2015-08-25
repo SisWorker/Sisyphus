@@ -14,7 +14,7 @@ public class RockObject : MonoBehaviour {
 	private float MaxSpeed =8.0f;
 	private float MaxSpeedY =5.5f;
 	private Vector3 ejectRock;
-	private bool playerContact;
+	public bool playerContact;
 	private bool onSlope;
 	private bool onGround;
 	private bool onPlatform;

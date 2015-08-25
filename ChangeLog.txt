@@ -83,3 +83,6 @@ ver 0.16--8/24
 	2. added pickable rock
 	3. pushed sky prefab to perfection
 	4. solved the framerate problem
+
+ver 0.17-- 8/25
+	1. added story telling camera feature. camera now can be easily controlled.

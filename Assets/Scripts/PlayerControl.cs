@@ -57,7 +57,7 @@ public class PlayerControl : MonoBehaviour {
 	// Update is called once per frame
 	void Update () 
 	{
-		Debug.Log (1 / Time.deltaTime);
+		//Debug.Log (1 / Time.deltaTime);
 
 		Operating = false;
 

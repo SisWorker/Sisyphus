@@ -1,0 +1,5 @@
+1. Rock physics
+2. ground sudden drop
+3. geyser animation
+
+4. pickable rock physics & cause bugs
