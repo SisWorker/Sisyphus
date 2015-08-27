@@ -11,8 +11,6 @@ public class ImproveBridge : MonoBehaviour {
 	//public bool[] stops;
 
 	public int curStop;
-
-	public bool rockOnBridge = false;
 	public bool throwRock = false;
 
 	//origin of rotation.
@@ -27,11 +25,11 @@ public class ImproveBridge : MonoBehaviour {
 	private GameObject NoFricBridge;
 
 	private GameObject curStopObject;
+	private GameObject[] throwList;
 	
 	// Use this for initialization
 	void Start () 
 	{
-		Rock = GameObject.Find ("Rock").GetComponent<Rigidbody2D> ();
 
 		NoFricBridge = transform.Find ("NoFricBridge").gameObject;
 		NoFricBridge.SetActive (false);
@@ -39,7 +37,7 @@ public class ImproveBridge : MonoBehaviour {
 		origin = pivot.transform.position;
 		curStop = 0;
 		Working = false;
-
+		throwRock = true;
 		float bridgeRotation=transform.eulerAngles.z;
 
 		if ((bridgeRotation>80f)&&(bridgeRotation<100f))
@@ -59,85 +57,91 @@ public class ImproveBridge : MonoBehaviour {
 
 		}
 
-		if (throwRock == true) 
-		{
-			float deltax = Rock.transform.position.x - pivot.transform.position.x;
-			float deltay = Rock.transform.position.y - pivot.transform.position.y;
-			float diag = Mathf.Sqrt(Mathf.Pow(deltax,2)+Mathf.Pow(deltay,2));
-			float sin = Mathf.Abs(deltay/diag);
-			float cos = Mathf.Abs(deltax/diag);
-			//sin-->throwing direction x component
-			//cos-->throwing y component
-			if(deltax>=0f)
-			{
-				if(deltay>=0f)
-				{
-					sin = -sin;
-				}
 
-			}
-			else
-			{
-				if(deltay>=0f)
-				{
-					sin = -sin;
-					cos = -cos;
-				}
-				else
-				{
-					cos = -cos;
-				}
-			}
-			int CounterClock = -1;
 
-			int curPos;
-			if(curStop!=0)
-			{
-				curPos = curStop-1;
-			}
-			else
-			{
-				curPos = rotateSpeed.Length-1;
-			}
 
-			if(rotateSpeed[curPos]>0)
-			{
-				CounterClock = 1;
-			}
-			else{
-				CounterClock = -1;
-			}
 
-			float throwforce = Mathf.Abs(rotateSpeed[curPos]*diag*0.5f);
 
-			float throwx = throwforce*sin*CounterClock;
-			float throwy = throwforce*cos*CounterClock;
-
-			Rock.AddForce(new Vector2(throwx,throwy));
-
-			throwRock = false;
-			
-		}
 
 
 
 	}
 
+	void Throw(Rigidbody2D obj)
+	{
+
+		float deltax = obj.transform.position.x - pivot.transform.position.x;
+		float deltay = obj.transform.position.y - pivot.transform.position.y;
+		float diag = Mathf.Sqrt (Mathf.Pow (deltax, 2) + Mathf.Pow (deltay, 2));
+		float sin = Mathf.Abs (deltay / diag);
+		float cos = Mathf.Abs (deltax / diag);
+		//sin-->throwing direction x component
+		//cos-->throwing y component
+		if (deltax >= 0f) {
+			if (deltay >= 0f) {
+				sin = -sin;
+			}
+		
+		} else {
+			if (deltay >= 0f) {
+				sin = -sin;
+				cos = -cos;
+			} else {
+				cos = -cos;
+			}
+		}
+		int CounterClock = -1;
+	
+		int curPos;
+		if (curStop != 0) {
+			curPos = curStop - 1;
+		} else {
+			curPos = rotateSpeed.Length - 1;
+		}
+	
+		if (rotateSpeed [curPos] > 0) {
+			CounterClock = 1;
+		} else {
+			CounterClock = -1;
+		}
+	
+		float throwforce = Mathf.Abs (rotateSpeed [curPos] * diag * 0.5f);
+	
+		float throwx = throwforce * sin * CounterClock;
+		float throwy = throwforce * cos * CounterClock;
+	
+		obj.AddForce (new Vector2 (throwx, throwy));
+	
+		throwRock = false;
+		
+
+
+	}
+	
+	
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		if(other.gameObject.CompareTag("RockContact"))
+
+
+	}
+	void OnTriggerStay2D(Collider2D other)
+	{
+		if(other.gameObject.CompareTag("PickUp")||other.gameObject.CompareTag("Player")||other.gameObject.CompareTag("RockContact"))
 			
 		{
-			rockOnBridge = true;
+			if(Working){
 			
+				other.transform.RotateAround (origin, ZAxis, rotateSpeed [curStop] * Time.deltaTime*0.3f);
+			}
+			if (throwRock) {
+				Throw (other.attachedRigidbody);
+			}
 		}
+
 	}
 	void OnTriggerExit2D(Collider2D other)
 	{
-		if (other.gameObject.CompareTag ("RockContact"))
-		{
-			rockOnBridge = false;
-		}
+	
 	}
 
 
@@ -148,9 +152,6 @@ public class ImproveBridge : MonoBehaviour {
 
 		this.tag = "Bridge";
 		transform.RotateAround (origin, ZAxis, rotateSpeed[pos] * Time.deltaTime);
-		if (rockOnBridge) {
-			Rock.transform.RotateAround (origin, ZAxis, rotateSpeed [pos] * Time.deltaTime);
-		}
 	}
 
 }

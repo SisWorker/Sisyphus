@@ -14,7 +14,7 @@ public class PlayerControl : MonoBehaviour {
 
 	public bool pickingUp;
 	private bool withAPickUpObj;
-	private bool canInteract;
+	public bool canInteract;
 	private float pickUpCounter;
 
 	//private Vector3 antiGravity;
@@ -89,6 +89,7 @@ public class PlayerControl : MonoBehaviour {
 			{
 				if (withWheel&&!withAPickUpObj)
 					Operating=true;
+				canInteract = false;
 			}
 
 			//go down 30 degree when going down a slope;
@@ -151,7 +152,6 @@ public class PlayerControl : MonoBehaviour {
 	{
 		if (!canInteract) 
 		{	
-			Debug.Log("Counter Working");
 			pickUpCounter += 0.02f;
 		}
 		if (pickUpCounter >= time) 

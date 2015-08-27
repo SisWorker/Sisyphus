@@ -44,11 +44,10 @@ public class StopPoint : MonoBehaviour {
 				}
 
 				//throw rock
-				if (rockThrowingPoint == true & bridgeScript.rockOnBridge == true)
+				if (rockThrowingPoint)
 					
 				{
 					bridgeScript.throwRock = true;
-					
 				}
 
 
