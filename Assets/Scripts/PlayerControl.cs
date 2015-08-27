@@ -270,7 +270,7 @@ public class PlayerControl : MonoBehaviour {
 		RaycastHit2D hitRock = Physics2D.Raycast (new Vector2 ((transform.position.x + (0.5f * moveHorizontal)), (transform.position.y + 0.6f)), Direction, 1f, RockLayer);
 		Debug.DrawRay (new Vector3 ((transform.position.x + (0.5f * moveHorizontal)), (transform.position.y + 0.6f), 0.1f), new Vector3 (moveHorizontal * 1f, 0.0f, 0.0f));
 		
-		if (hitRock) 
+		if (hitRock&&!pickingUp) 
 		{
 			pushing = true;
 		}
@@ -286,6 +286,7 @@ public class PlayerControl : MonoBehaviour {
 			else
 				animator.SetBool("Walking",false);
 		}
+
 		animator.SetBool ("PushRock", pushing);
 		if (onGround||onRock) {
 			animator.SetBool ("Jump", false);

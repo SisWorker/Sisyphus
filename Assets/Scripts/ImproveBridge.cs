@@ -37,7 +37,7 @@ public class ImproveBridge : MonoBehaviour {
 		origin = pivot.transform.position;
 		curStop = 0;
 		Working = false;
-		throwRock = true;
+		throwRock = false;
 		float bridgeRotation=transform.eulerAngles.z;
 
 		if ((bridgeRotation>80f)&&(bridgeRotation<100f))
@@ -59,7 +59,9 @@ public class ImproveBridge : MonoBehaviour {
 
 
 
+		if (throwRock) {
 
+		}
 
 
 
@@ -112,7 +114,7 @@ public class ImproveBridge : MonoBehaviour {
 	
 		obj.AddForce (new Vector2 (throwx, throwy));
 	
-		throwRock = false;
+
 		
 
 
@@ -126,7 +128,7 @@ public class ImproveBridge : MonoBehaviour {
 	}
 	void OnTriggerStay2D(Collider2D other)
 	{
-		if(other.gameObject.CompareTag("PickUp")||other.gameObject.CompareTag("Player")||other.gameObject.CompareTag("RockContact"))
+		if(other.gameObject.CompareTag("PickUp")||other.gameObject.CompareTag("RockContact"))
 			
 		{
 			if(Working){
@@ -137,11 +139,21 @@ public class ImproveBridge : MonoBehaviour {
 				Throw (other.attachedRigidbody);
 			}
 		}
+		if (other.gameObject.CompareTag ("Player")) 
+		{
+			if(Working)
+			{
+				other.transform.RotateAround (origin, ZAxis, rotateSpeed [curStop] * Time.deltaTime*0.3f);
+				other.transform.Rotate(new Vector3(0f,0f,-rotateSpeed [curStop] * Time.deltaTime*0.3f));
+			}
+		}
 
 	}
 	void OnTriggerExit2D(Collider2D other)
 	{
-	
+		if (other.gameObject.CompareTag ("PickUp") || other.gameObject.CompareTag ("Player") || other.gameObject.CompareTag ("RockContact")) {
+			throwRock = false;
+		}
 	}
 
 
