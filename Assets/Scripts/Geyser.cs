@@ -7,7 +7,7 @@ public class Geyser : MonoBehaviour {
 	public float inactiveTime;
 	public float pushForceFactor;
 	public float heightLimit;
-
+	public bool nothingOn;
 
 	private float horAdj;
 	private float actCounter;
@@ -25,11 +25,18 @@ public class Geyser : MonoBehaviour {
 		animator.SetBool ("Active", Active);
 		relativeHeight = 0f;
 		originalPosition = transform.position;
+		nothingOn = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
+		if (Active&&nothingOn) {
+			transform.position = originalPosition + new Vector2 (0f, 10f);
+		} 
+		if(!Active) 
+		{
+			transform.position = originalPosition;
+		}
 	}
 	void FixedUpdate()
 
@@ -56,7 +63,8 @@ public class Geyser : MonoBehaviour {
 
 	void OnTriggerStay2D(Collider2D other)
 	{
-		if (Active) {
+		nothingOn = false;
+		if (Active&&!nothingOn) {
 
 			if ((other.transform.position.y - originalPosition.y) >= 0f) {
 				relativeHeight = other.transform.position.y - originalPosition.y;
@@ -100,7 +108,9 @@ public class Geyser : MonoBehaviour {
 	}
 	void OnTriggerExit2D(Collider2D other)
 	{
-
+		if (other.gameObject.CompareTag("Player")||other.gameObject.CompareTag("RockContact")||other.gameObject.CompareTag("PickUp")) {
+			nothingOn = true;
+		} 
 	}
 
 
