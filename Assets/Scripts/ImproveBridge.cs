@@ -55,8 +55,9 @@ public class ImproveBridge : MonoBehaviour {
 		{
 			Rotate (curStop);
 
-
 		}
+		ThrowTimer (0.5f);
+
 
 	}
 

@@ -9,7 +9,7 @@ public class PickUpObject : MonoBehaviour {
 	private GameObject player;
 	private PlayerControl playerScript;
 	private bool playerContact;
-
+	public bool onGround;
 
 
 
@@ -48,7 +48,9 @@ public class PickUpObject : MonoBehaviour {
 		if (!playerScript.pickingUp) 
 		{
 			pickedUp = false;
+			if(!onGround){
 			GetComponent<Rigidbody2D>().isKinematic = false;
+			}
 		}
 
 
@@ -62,9 +64,9 @@ public class PickUpObject : MonoBehaviour {
 	void OnTriggerStay2D(Collider2D other)
 	{
 
-		if (other.gameObject.CompareTag("Ground")) 
+		if (other.gameObject.layer==11&&!other.gameObject.CompareTag("Bridge")) 
 		{
-
+			onGround = true;
 			GetComponent<Rigidbody2D>().isKinematic = true;
 		}
 		if (other.gameObject.CompareTag ("Player")) 
@@ -78,6 +80,8 @@ public class PickUpObject : MonoBehaviour {
 		{
 			playerContact = false;
 		}
-
+		if (other.gameObject.layer==11) {
+			onGround = false;
+		}
 	}
 }

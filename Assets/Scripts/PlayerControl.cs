@@ -108,7 +108,7 @@ public class PlayerControl : MonoBehaviour {
 		//move=move.normalized;
 		Rbody.velocity = move;
 
-		PickUpTimer (1f);
+		PickUpTimer (0.5f);
 	
 
 

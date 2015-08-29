@@ -131,14 +131,14 @@ public class RockObject : MonoBehaviour {
 			playerContact=true;
 		}
 
-		if (other.gameObject.layer == 11)
-		{
-			onGround = true;
-			if (other.gameObject.tag!="Slope")
-			{
-				backDirection=other.gameObject.GetComponent<OneWayPlatform>().RightDirect;
-			}
-		}
+//		if (other.gameObject.layer == 11)
+//		{
+//			onGround = true;
+//			if (other.gameObject.tag!="Slope")
+//			{
+//				backDirection=other.gameObject.GetComponent<OneWayPlatform>().RightDirect;
+//			}
+//		}
 		if (other.gameObject.CompareTag ("MovingPlatform"))
 		{
 			onPlatform = true;
