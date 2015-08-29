@@ -7,6 +7,7 @@ public class RockObject : MonoBehaviour {
 	public UIDialog ms;
 
 	public float SecondsToB=5f;
+	public bool canThrow;
 	private float Counter;
 	private Vector3 BackForce;
 	private bool backDirection;
@@ -31,6 +32,7 @@ public class RockObject : MonoBehaviour {
 		playerContact = false;
 		onGround = false;
 		Counter = 0;
+		canThrow = true;
 
 	}
 	
@@ -131,14 +133,14 @@ public class RockObject : MonoBehaviour {
 			playerContact=true;
 		}
 
-//		if (other.gameObject.layer == 11)
-//		{
-//			onGround = true;
-//			if (other.gameObject.tag!="Slope")
-//			{
-//				backDirection=other.gameObject.GetComponent<OneWayPlatform>().RightDirect;
-//			}
-//		}
+		if (other.gameObject.layer == 11)
+		{
+			onGround = true;
+			if (other.gameObject.tag!="Slope")
+			{
+				backDirection=other.gameObject.GetComponent<OneWayPlatform>().RightDirect;
+			}
+		}
 		if (other.gameObject.CompareTag ("MovingPlatform"))
 		{
 			onPlatform = true;

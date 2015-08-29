@@ -5,6 +5,7 @@ public class PickUpObject : MonoBehaviour {
 
 	public bool pickedUp;
 	public Vector3 offSet;
+	public bool canThrow;
 
 	private GameObject player;
 	private PlayerControl playerScript;
@@ -18,6 +19,7 @@ public class PickUpObject : MonoBehaviour {
 		player = GameObject.Find("Player");
 		playerScript = player.GetComponent<PlayerControl> ();
 		pickedUp = false;
+		canThrow = true;
 
 	}
 	
@@ -64,7 +66,7 @@ public class PickUpObject : MonoBehaviour {
 	void OnTriggerStay2D(Collider2D other)
 	{
 
-		if (other.gameObject.layer==11&&!other.gameObject.CompareTag("Bridge")) 
+		if (other.gameObject.layer==11&&other.gameObject.name!="bridge") 
 		{
 			onGround = true;
 			GetComponent<Rigidbody2D>().isKinematic = true;

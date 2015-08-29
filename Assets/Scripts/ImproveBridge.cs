@@ -56,7 +56,7 @@ public class ImproveBridge : MonoBehaviour {
 			Rotate (curStop);
 
 		}
-		ThrowTimer (0.5f);
+
 
 
 	}
@@ -138,8 +138,9 @@ public class ImproveBridge : MonoBehaviour {
 			
 				other.transform.RotateAround (origin, ZAxis, rotateSpeed [curStop] * Time.deltaTime*0.3f);
 			}
-			if (throwRock) {
+			if (throwRock&&other.GetComponent<PickUpObject>().canThrow) {
 				Throw (other.attachedRigidbody);
+				other.GetComponent<PickUpObject>().canThrow = false;
 			}
 		}
 		if (other.gameObject.CompareTag ("RockContact")) 
@@ -148,8 +149,9 @@ public class ImproveBridge : MonoBehaviour {
 				
 				other.transform.RotateAround (origin, ZAxis, rotateSpeed [curStop] * Time.deltaTime*0.3f);
 			}
-			if (throwRock) {
+			if (throwRock&&other.GetComponent<RockObject>().canThrow) {
 				Throw (other.attachedRigidbody);
+				other.GetComponent<RockObject>().canThrow = false;
 			}
 		}
 		if (other.gameObject.CompareTag ("Player")) 
@@ -165,7 +167,12 @@ public class ImproveBridge : MonoBehaviour {
 	}
 	void OnTriggerExit2D(Collider2D other)
 	{
-
+		if (other.gameObject.CompareTag ("PickUp")) {
+			other.GetComponent<PickUpObject>().canThrow = true;
+		}
+		if (other.gameObject.CompareTag ("RockContact")) {
+			other.GetComponent<RockObject>().canThrow = true;
+		}
 	}
 
 
