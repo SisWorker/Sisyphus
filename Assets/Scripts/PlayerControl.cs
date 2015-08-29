@@ -16,6 +16,8 @@ public class PlayerControl : MonoBehaviour {
 	private bool withAPickUpObj;
 	public bool canInteract;
 	private float pickUpCounter;
+	public bool holdingSomething;
+	public bool canHoldMore;
 
 	//private Vector3 antiGravity;
 	//private bool canJump;
@@ -56,6 +58,7 @@ public class PlayerControl : MonoBehaviour {
 		jumpsAvailable = 1;
 		pickingUp = false;
 		canInteract = true;
+		canHoldMore = true;
 	}
 	
 
@@ -329,6 +332,7 @@ public class PlayerControl : MonoBehaviour {
 			{
 				pickingUp = false;
 				canInteract = false;
+				canHoldMore = true;
 			}
 		
 		}

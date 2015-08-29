@@ -26,6 +26,7 @@ public class ImproveBridge : MonoBehaviour {
 
 	private GameObject curStopObject;
 	private GameObject[] throwList;
+	private float throwCounter;
 	
 	// Use this for initialization
 	void Start () 
@@ -57,17 +58,22 @@ public class ImproveBridge : MonoBehaviour {
 
 		}
 
-
-
-		if (throwRock) {
-
-		}
-
-
-
-
-
 	}
+
+	void ThrowTimer(float time)
+	{
+		if (throwRock) 
+		{	
+			throwCounter += 0.02f;
+		}
+		if (throwCounter >= time) 
+		{
+			throwRock = false;
+			throwCounter = 0f;
+		}
+		
+	}
+
 
 	void Throw(Rigidbody2D obj)
 	{
@@ -114,10 +120,6 @@ public class ImproveBridge : MonoBehaviour {
 	
 		obj.AddForce (new Vector2 (throwx, throwy));
 	
-
-		
-
-
 	}
 	
 	
@@ -128,11 +130,21 @@ public class ImproveBridge : MonoBehaviour {
 	}
 	void OnTriggerStay2D(Collider2D other)
 	{
-		if(other.gameObject.CompareTag("PickUp")||other.gameObject.CompareTag("RockContact"))
+		if(other.gameObject.CompareTag("PickUp"))
 			
 		{
 			if(Working){
 			
+				other.transform.RotateAround (origin, ZAxis, rotateSpeed [curStop] * Time.deltaTime*0.3f);
+			}
+			if (throwRock) {
+				Throw (other.attachedRigidbody);
+			}
+		}
+		if (other.gameObject.CompareTag ("RockContact")) 
+		{
+			if(Working){
+				
 				other.transform.RotateAround (origin, ZAxis, rotateSpeed [curStop] * Time.deltaTime*0.3f);
 			}
 			if (throwRock) {
@@ -148,12 +160,11 @@ public class ImproveBridge : MonoBehaviour {
 			}
 		}
 
+
 	}
 	void OnTriggerExit2D(Collider2D other)
 	{
-		if (other.gameObject.CompareTag ("PickUp") || other.gameObject.CompareTag ("Player") || other.gameObject.CompareTag ("RockContact")) {
-			throwRock = false;
-		}
+
 	}
 
 

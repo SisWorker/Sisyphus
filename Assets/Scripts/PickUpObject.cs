@@ -8,6 +8,7 @@ public class PickUpObject : MonoBehaviour {
 
 	private GameObject player;
 	private PlayerControl playerScript;
+	private bool playerContact;
 
 
 
@@ -26,26 +27,27 @@ public class PickUpObject : MonoBehaviour {
 
 
 
-		if(playerScript.pickingUp)
-		{
+		if (playerScript.pickingUp && playerContact&&playerScript.canHoldMore) {
+			Debug.Log("Picked UP");
+			pickedUp = true;
+			GetComponent<Rigidbody2D> ().isKinematic = true;
+			playerScript.canHoldMore = false;
 
-			GetComponent<Rigidbody2D>().isKinematic = true;
-			if(playerScript.facingRight)
-			{	
-				transform.position = new Vector3(player.transform.position.x + 2f,player.transform.position.y+0.5f,0f);
+		}
+		if (pickedUp) {
+			if (playerScript.facingRight) {	
+				transform.position = new Vector3 (player.transform.position.x + 2f, player.transform.position.y + 0.5f, 0f);
+			} else {
+				transform.position = new Vector3 (player.transform.position.x - 2f, player.transform.position.y + 0.5f, 0f);
 			}
-			else
-			{
-				transform.position = new Vector3(player.transform.position.x - 2f,player.transform.position.y+0.5f,0f);
-			}
-
+		}
 
 
 			
-		}
+		
 		if (!playerScript.pickingUp) 
 		{
-
+			pickedUp = false;
 			GetComponent<Rigidbody2D>().isKinematic = false;
 		}
 
@@ -65,10 +67,17 @@ public class PickUpObject : MonoBehaviour {
 
 			GetComponent<Rigidbody2D>().isKinematic = true;
 		}
+		if (other.gameObject.CompareTag ("Player")) 
+		{
+			playerContact = true;
+		}
 	}
 	void OnTriggerExit2D(Collider2D other)
 	{
-
+		if (other.gameObject.CompareTag ("Player")) 
+		{
+			playerContact = false;
+		}
 
 	}
 }
