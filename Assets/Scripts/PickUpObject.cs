@@ -66,7 +66,7 @@ public class PickUpObject : MonoBehaviour {
 	void OnTriggerStay2D(Collider2D other)
 	{
 
-		if (other.gameObject.layer==11&&other.gameObject.name!="bridge") 
+		if (other.gameObject.layer==11&&other.gameObject.name!="bridge"&&!other.gameObject.CompareTag("PickUp")) 
 		{
 			onGround = true;
 			GetComponent<Rigidbody2D>().isKinematic = true;

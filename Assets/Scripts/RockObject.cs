@@ -14,7 +14,6 @@ public class RockObject : MonoBehaviour {
 
 	private float MaxSpeed =8.0f;
 	private float MaxSpeedY =5.5f;
-	private Vector3 ejectRock;
 	public bool playerContact;
 	private bool onSlope;
 	private bool onGround;
@@ -28,7 +27,7 @@ public class RockObject : MonoBehaviour {
 	void Start ()
 	{
 		Rock = GetComponent<Rigidbody2D>();
-		ejectRock = new Vector3 (40f, 60f, 0.0f);
+
 		playerContact = false;
 		onGround = false;
 		Counter = 0;
@@ -121,10 +120,7 @@ public class RockObject : MonoBehaviour {
 		if (other.gameObject.CompareTag ("Bridge")) {
 
 		}
-		if (other.gameObject.CompareTag ("Top")) {
-			Rock.velocity = ejectRock;
-			ms.Proceed ();
-		}
+
 
 		//slow when touching player
 		if (other.gameObject.CompareTag ("Player"))

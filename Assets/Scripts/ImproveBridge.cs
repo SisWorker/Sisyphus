@@ -11,26 +11,37 @@ public class ImproveBridge : MonoBehaviour {
 	//public bool[] stops;
 
 	public int curStop;
+
+	//###################################
+	/*Variables required for throwing Rock only*/
+	/*The Rock throwing mechanism will work as the following: */
+	/*A variable will hold the Rock object from initialization*/
+	/*whenever the Rock needs to be thrown, force will apply to it directly, not through "ontrigger" reference*/
+	/*the StopPoint that is marked as "RockThrowingPoint" will turn on the boolean "ThrowRock" upon bridge contact*/
+	/*"ThrowRock"  and "RockOnBridge" are the preconditions for the function "Throw" to work*/
+	/*the mechanism that the rock will rotate along with the bridge is written inside of "Rotate" function*/
+	/*"throwRock" will be turned off through OnTriggerExit*/
+
 	public bool throwRock = false;
+	private Rigidbody2D Rock;
+	private RockObject RockScript;
+	private bool RockOnBridge;
 
 	//origin of rotation.
 	public Transform pivot;
 
 	private Vector3 origin;
 
-	private Rigidbody2D Rock;
-
 	private Vector3 ZAxis = new Vector3 (0f, 0f, 1f);
 	private int position;
 	private GameObject NoFricBridge;
-
-	private GameObject curStopObject;
-	private GameObject[] throwList;
 	private float throwCounter;
+
 	
 	// Use this for initialization
 	void Start () 
 	{
+		Rock = GameObject.Find ("Rock").GetComponent<Rigidbody2D> ();
 
 		NoFricBridge = transform.Find ("NoFricBridge").gameObject;
 		NoFricBridge.SetActive (false);
@@ -46,19 +57,28 @@ public class ImproveBridge : MonoBehaviour {
 			NoFricBridge.SetActive(true);
 		}
 	}
+		
 	
 	// Update is called once per frame
 	void Update () 
 	{
 
-		if (Working) 
-		{
+		if (Working) {
 			Rotate (curStop);
-
 		}
 
 
+	}
 
+	void FixedUpdate()
+	{
+		if (!RockOnBridge) {
+			throwRock = false;
+		}
+		//ThrowTimer (0.05);
+		if (RockOnBridge && throwRock) {
+			Throw(Rock);			
+		}
 	}
 
 	void ThrowTimer(float time)
@@ -114,13 +134,13 @@ public class ImproveBridge : MonoBehaviour {
 			CounterClock = -1;
 		}
 	
-		float throwforce = Mathf.Abs (rotateSpeed [curPos] * diag * 0.5f);
+		float throwforce = Mathf.Abs (rotateSpeed[curPos] * diag * 0.5f);
 	
 		float throwx = throwforce * sin * CounterClock;
 		float throwy = throwforce * cos * CounterClock;
 	
 		obj.AddForce (new Vector2 (throwx, throwy));
-	
+
 	}
 	
 	
@@ -131,47 +151,25 @@ public class ImproveBridge : MonoBehaviour {
 	}
 	void OnTriggerStay2D(Collider2D other)
 	{
-		if(other.gameObject.CompareTag("PickUp"))
-			
-		{
-			if(Working){
-			
-				other.transform.RotateAround (origin, ZAxis, rotateSpeed [curStop] * Time.deltaTime*0.3f);
-			}
-			if (throwRock&&other.GetComponent<PickUpObject>().canThrow) {
-				Throw (other.attachedRigidbody);
-				other.GetComponent<PickUpObject>().canThrow = false;
-			}
-		}
+
 		if (other.gameObject.CompareTag ("RockContact")) 
 		{
-			if(Working){
-				
-				other.transform.RotateAround (origin, ZAxis, rotateSpeed [curStop] * Time.deltaTime*0.3f);
-			}
-			if (throwRock&&other.GetComponent<RockObject>().canThrow) {
-				Throw (other.attachedRigidbody);
-				other.GetComponent<RockObject>().canThrow = false;
-			}
+			RockOnBridge = true;
 		}
+
+
 		if (other.gameObject.CompareTag ("Player")) 
 		{
-			if(Working)
-			{
-				other.transform.RotateAround (origin, ZAxis, rotateSpeed [curStop] * Time.deltaTime*0.3f);
-				other.transform.Rotate(new Vector3(0f,0f,-rotateSpeed [curStop] * Time.deltaTime*0.3f));
-			}
+
 		}
 
 
 	}
 	void OnTriggerExit2D(Collider2D other)
 	{
-		if (other.gameObject.CompareTag ("PickUp")) {
-			other.GetComponent<PickUpObject>().canThrow = true;
-		}
 		if (other.gameObject.CompareTag ("RockContact")) {
-			other.GetComponent<RockObject>().canThrow = true;
+			throwRock = false;
+			RockOnBridge = false;
 		}
 	}
 
@@ -183,6 +181,9 @@ public class ImproveBridge : MonoBehaviour {
 
 		this.tag = "Bridge";
 		transform.RotateAround (origin, ZAxis, rotateSpeed[pos] * Time.deltaTime);
+		if (RockOnBridge) {
+			Rock.transform.RotateAround (origin, ZAxis, rotateSpeed[pos] * Time.deltaTime);
+		}
 	}
 
 }

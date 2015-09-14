@@ -27,8 +27,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 156324}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -10.5296783, y: -9.28500938, z: -8}
+  m_LocalRotation: {x: -.00235619303, y: 0, z: 0, w: .999997258}
+  m_LocalPosition: {x: -11.1999998, y: -9.78999996, z: -8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -130,8 +130,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 8
   jumpForce: 12
-  Rock: {fileID: 0}
   Operating: 0
+  pickingUp: 0
+  canInteract: 0
+  holdingSomething: 0
+  canHoldMore: 0
+  facingRight: 0
 --- !u!212 &21296630
 SpriteRenderer:
   m_ObjectHideFlags: 1
