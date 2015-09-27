@@ -132,7 +132,7 @@ public class RockObject : MonoBehaviour {
 		if (other.gameObject.layer == 11)
 		{
 			onGround = true;
-			if (other.gameObject.tag!="Slope")
+			if (other.gameObject.tag!="Slope"&&other.gameObject.GetComponent<OneWayPlatform>()!=null)
 			{
 				backDirection=other.gameObject.GetComponent<OneWayPlatform>().RightDirect;
 			}
