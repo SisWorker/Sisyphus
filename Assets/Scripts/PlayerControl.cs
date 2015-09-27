@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿ using UnityEngine;
 using System.Collections;
 
 public class PlayerControl : MonoBehaviour {
@@ -189,21 +189,24 @@ public class PlayerControl : MonoBehaviour {
 		
 		RaycastHit2D hit1;
 		RaycastHit2D hit2;
+
 		
 		hit1=Physics2D.Raycast(origin1, Down , -0.5f, playerLayer);
 		hit2=Physics2D.Raycast(origin2, Down , -0.5f, playerLayer);
 		canJump = hit1 || hit2;
 
+		if (hit1.collider != null) {
+			onRock = hit1.collider.gameObject.layer == 10 ? true : false;
+		}
+		if (hit2.collider != null) {
+			onRock = hit2.collider.gameObject.layer == 10 ? true : false;
+		}
 		//hit = Physics2D.Raycast (new Vector2 (transform.position.x, (transform.position.y-1.35f)), Down, -0.9f, GroundLayer);
 		//Debug.DrawRay(new Vector3 ((transform.position.x), (transform.position.y-1.35f),0.1f), new Vector3 (0f,(-0.9f),0f));
 		
 		//Debug.Log ("onground:"+onGround);
 
-		if (hit1.collider.gameObject.layer == 10 || hit2.collider.gameObject.layer == 10) {
-			onRock = true;
-		} else {
-			onRock = false;
-		}
+
 
 
 
