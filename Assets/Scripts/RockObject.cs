@@ -71,15 +71,11 @@ public class RockObject : MonoBehaviour {
 
 	void FixedUpdate()
 	{
-		//Rollback
-		BackForce = new Vector3 (-4, 0, 0);
-		if (backDirection) 
-		{
-			//Debug.Log ("rightward!");
-			BackForce = new Vector3 (4, 0f, 0);
-		}
+        //Rollback
 
-		if ((Counter >= SecondsToB) &&((Rock.velocity.x<MaxSpeed)&&(Rock.velocity.x>(-MaxSpeed))))
+        BackForce = backDirection ? new Vector3(3, 0f, 0) : new Vector3(-3, 0f, 0);
+        Debug.Log("backDirection: " + backDirection);
+        if ((Counter >= SecondsToB) &&((Rock.velocity.x<MaxSpeed)&&(Rock.velocity.x>(-MaxSpeed))))
 		{
 			//Debug.Log ("Burst!");
 
@@ -93,7 +89,7 @@ public class RockObject : MonoBehaviour {
 		}
 		else 
 		{
-			if (onGround&&(Rock.velocity.y==0))
+			if (onGround&&(Rock.velocity.x==0))
 			{
 				//Counter accumulates when is alone and onground
 				Counter += 0.02f;
@@ -131,10 +127,10 @@ public class RockObject : MonoBehaviour {
 
 		if (other.gameObject.layer == 11)
 		{
-			onGround = true;
+			
 			if (other.gameObject.tag!="Slope"&&other.gameObject.GetComponent<OneWayPlatform>()!=null)
 			{
-				backDirection=other.gameObject.GetComponent<OneWayPlatform>().RightDirect;
+				backDirection=!other.gameObject.GetComponent<OneWayPlatform>().RightDirect;
 			}
 		}
 		if (other.gameObject.CompareTag ("MovingPlatform"))
@@ -147,7 +143,8 @@ public class RockObject : MonoBehaviour {
 
 	void OnTriggerStay2D(Collider2D other)
 	{
-		if (other.gameObject.CompareTag ("MovingPlatform"))
+        onGround = true;
+        if (other.gameObject.CompareTag ("MovingPlatform"))
 		{
 			offset = other.gameObject.GetComponentInParent<MovingPlatform>().GetMoveDir();
 		}

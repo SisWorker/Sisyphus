@@ -11,7 +11,6 @@ public class OneWayPlatform : MonoBehaviour {
 	void Start () {
 		ExitCount = 0;
 		Exit = false;
-		RightDirect = true;
 	}
 	
 	// Update is called once per frame
