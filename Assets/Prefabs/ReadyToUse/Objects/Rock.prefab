@@ -14,7 +14,7 @@ GameObject:
   - 50: {fileID: 5002912}
   - 114: {fileID: 11486446}
   m_Layer: 10
-  m_Name: Rock 1
+  m_Name: Rock
   m_TagString: RockContact
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -87,6 +87,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ms: {fileID: 0}
   SecondsToB: 5
+  canThrow: 0
+  playerContact: 0
 --- !u!212 &21254976
 SpriteRenderer:
   m_ObjectHideFlags: 1
