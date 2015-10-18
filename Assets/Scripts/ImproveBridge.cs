@@ -10,7 +10,7 @@ public class ImproveBridge : MonoBehaviour {
 
 	public bool Working;
 	public float[] rotateSpeed;
-	public Queue<Rigidbody2D> throwQ= new Queue <Rigidbody2D>();
+	public LinkedList<Rigidbody2D> throwQ= new LinkedList <Rigidbody2D>();
 
 	//public List <Collider2D> Contacted = new List<Collider2D>();
 	//public Collider2D [] Contacted= new Collider2D[20] ;
@@ -93,7 +93,8 @@ public class ImproveBridge : MonoBehaviour {
 			//Debug.Log ("Count"+throwQ.Count);
 			while(throwQ.Count!=0)
 			{
-				Rigidbody2D a = throwQ.Dequeue();
+				Rigidbody2D a = throwQ.Last.Value;
+				throwQ.RemoveLast();
 				Throw(a);
 				//Debug.Log("throw!");
 			}
@@ -187,25 +188,31 @@ public class ImproveBridge : MonoBehaviour {
 			if(!throwQ.Contains(other.gameObject.GetComponent<Rigidbody2D>()))
 			{
 				PickUpObject sc= other.gameObject.GetComponent<PickUpObject>();
-				
-				throwQ.Enqueue(other.gameObject.GetComponent<Rigidbody2D>());
+				throwQ.AddFirst(other.gameObject.GetComponent<Rigidbody2D>());
 				Debug.Log("enqueue");
 			}
-			
 		}
 
 	}
+
 	void OnTriggerStay2D(Collider2D other)
 	{
 
-
-
 	}
+
+
 	void OnTriggerExit2D(Collider2D other)
 	{
-		if (other.gameObject.CompareTag ("RockContact")) {
+		if (other.gameObject.CompareTag ("RockContact")) 
+		{
 			//throwRock = false;
 			RockOnBridge = false;
+		}
+
+		if(other.gameObject.CompareTag("PickUp"))
+		{
+			Rigidbody2D a=other.gameObject.GetComponent<Rigidbody2D>();
+			throwQ.Remove(a);
 		}
 	}
 
@@ -223,7 +230,8 @@ public class ImproveBridge : MonoBehaviour {
 			Rock.transform.RotateAround (origin, ZAxis, rotateSpeed[pos] * Time.deltaTime);
 		}
 
-		Rigidbody2D[] Contacted = throwQ.ToArray ();
+		Rigidbody2D[] Contacted = new Rigidbody2D[100];
+		throwQ.CopyTo(Contacted,0);
 
 		for (int i=0; i<throwQ.Count; i++)
 		{
@@ -234,5 +242,4 @@ public class ImproveBridge : MonoBehaviour {
 
 		}
 	}
-
 }
