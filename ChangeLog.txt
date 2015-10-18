@@ -91,3 +91,7 @@ ver 0.19-- 10/18
 	1. used a LinkedList to contain the ridigbodies to throw, not everthing about the throwing
 	 with bridges, rock and pickups seems to be fixed.
 	2. waiting to be merged with Richards' demo level.
+
+ver 0.2 -- 10/18
+	1. merged with richards demo that based on boting's master and added only richard's level scene.
+	2. A throught: wee probalbly need to ignore scene files in the future since they cause a lot fo troubles.

@@ -3,3 +3,6 @@
 3. geyser animation
 
 4. pickable rock physics & cause bugs //fixed!
+
+5.Design more levels,
+6.fill Sky with screnn when camera moves.
