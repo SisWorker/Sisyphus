@@ -46,8 +46,6 @@ public class StoryTellingPoint : MonoBehaviour {
 		{
 			camScript.Working=true;
 
-			Debug.Log ("Working");
-			Debug.Log ("OnAction: "+ OnAction);
 
 			//hold player and rock still while camera is moving
 			Rigidbody2D PRB=Player.GetComponent<Rigidbody2D>();
@@ -83,7 +81,7 @@ public class StoryTellingPoint : MonoBehaviour {
 
 	void BackToPlayer(float time)
 	{
-		Debug.Log ("Back");
+		//Debug.Log ("Back");
 
 		if (TimePassed == 0) 
 		{
@@ -101,7 +99,7 @@ public class StoryTellingPoint : MonoBehaviour {
 
 		if (TimePassed >= time) 
 		{
-			Debug.Log ("StopWork");
+			//Debug.Log ("StopWork");
 
 			Working = false;
 			camScript.Working=false;
@@ -113,7 +111,7 @@ public class StoryTellingPoint : MonoBehaviour {
 
 	void MoveTo(float time, Vector3 Point)
 	{
-		Debug.Log ("MoveTo");
+		//Debug.Log ("MoveTo");
 
 		if (TimePassed == 0) 
 		{	
@@ -132,7 +130,7 @@ public class StoryTellingPoint : MonoBehaviour {
 
 	void ZoomTo(float time, Vector3 Size)
 	{
-		Debug.Log ("ZoomTo");
+		//Debug.Log ("ZoomTo");
 
 		if (TimePassed == 0) 
 		{	
@@ -151,7 +149,7 @@ public class StoryTellingPoint : MonoBehaviour {
 
 	void Hold(float time)
 	{
-		Debug.Log ("Hold");
+		//Debug.Log ("Hold");
 
 		TimePassed += 0.02f;
 
@@ -166,7 +164,7 @@ public class StoryTellingPoint : MonoBehaviour {
 	{
 		if (other.CompareTag ("Player") && (!hasPlayed)) 
 		{
-			Debug.Log ("start to work");
+			//Debug.Log ("start to work");
 
 			//record camera's position and size before move
 			CameraPos=MCamera.transform.position;

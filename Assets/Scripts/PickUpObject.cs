@@ -5,12 +5,15 @@ public class PickUpObject : MonoBehaviour {
 
 	public bool pickedUp;
 	public Vector3 offSet;
-	public bool canThrow;
+	public bool canThrow=true;
 
 	private GameObject player;
 	private PlayerControl playerScript;
 	private bool playerContact;
 	public bool onGround;
+
+	private float timer=0;
+
 
 
 
@@ -19,8 +22,21 @@ public class PickUpObject : MonoBehaviour {
 		player = GameObject.Find("Player");
 		playerScript = player.GetComponent<PlayerControl> ();
 		pickedUp = false;
-		canThrow = true;
+		//canThrow = true;
 
+	}
+
+	void FixedUpdate()
+	{
+		if (canThrow = false) 
+		{
+			timer += 0.02f;
+		}
+		if ((timer>=1)&&!canThrow)  //make the pickup only throwable once in each second
+		{
+			canThrow=true;
+			timer=0f;
+		}
 	}
 	
 	// Update is called once per frame
