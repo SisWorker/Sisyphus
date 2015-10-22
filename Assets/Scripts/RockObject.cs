@@ -74,7 +74,6 @@ public class RockObject : MonoBehaviour {
         //Rollback
 
         BackForce = backDirection ? new Vector3(3, 0f, 0) : new Vector3(-3, 0f, 0);
-        Debug.Log("backDirection: " + backDirection);
         if ((Counter >= SecondsToB) &&((Rock.velocity.x<MaxSpeed)&&(Rock.velocity.x>(-MaxSpeed))))
 		{
 			//Debug.Log ("Burst!");

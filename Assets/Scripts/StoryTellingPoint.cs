@@ -17,7 +17,8 @@ public class StoryTellingPoint : MonoBehaviour {
 	private float SizeDif;
 	private CameraController camScript;
 	public float[] DoTime;
-
+    private GameObject sky;
+    private Vector3 skyOffSet;
 	public string[] ToDos;
 
 	public Vector3 [] Targets;
@@ -35,8 +36,9 @@ public class StoryTellingPoint : MonoBehaviour {
 		MCamera = GameObject.Find ("Main Camera");
 		cam= MCamera.GetComponent<Camera>();
 		TimePassed = 0f;
-
+        sky = GameObject.Find("SkySeperate");
 		camScript= MCamera.GetComponent<CameraController>();
+        skyOffSet = sky.transform.position - MCamera.transform.position;
 	}
 	
 	// Update is called once per frame
@@ -60,20 +62,23 @@ public class StoryTellingPoint : MonoBehaviour {
 			}
 			else 
 			{
-				if (ToDos[OnAction]=="Move")
-				{
-					MoveTo (DoTime[OnAction],Targets[OnAction]);
-				}
+                if (OnAction < ToDos.Length) {
+                    if (ToDos[OnAction]=="Move")
+				    {
+					    MoveTo (DoTime[OnAction],Targets[OnAction]);
+				    }
 
-				if (ToDos[OnAction]=="Zoom")
-				{
-					ZoomTo (DoTime[OnAction],Targets[OnAction]);
-				}
+				    if (ToDos[OnAction]=="Zoom")
+				    {
+					    ZoomTo (DoTime[OnAction],Targets[OnAction]);
+				    }
 
-				if (ToDos[OnAction]=="Hold")
-				{
-					Hold(DoTime[OnAction]);
-				}
+				    if (ToDos[OnAction]=="Hold")
+				    {
+					    Hold(DoTime[OnAction]);
+				    }
+                }
+				
 			}
 
 		}
@@ -116,6 +121,7 @@ public class StoryTellingPoint : MonoBehaviour {
 		}
 
 		MCamera.transform.position = MCamera.transform.position+Distance;
+        sky.transform.position = MCamera.transform.position+skyOffSet;
 		TimePassed += 0.02f;
 
 		if (TimePassed >= time) 

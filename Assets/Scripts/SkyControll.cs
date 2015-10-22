@@ -8,8 +8,8 @@ public class SkyControll : MonoBehaviour {
 	public float RelativeSpeedY;
 	public string LoadName;
 	
-	public bool hasCreatedCopyL=false;
-	public bool hasCreatedCopyR=false;
+	public bool hasCreatedCopyL;
+	public bool hasCreatedCopyR;
 	
 	public bool canCreateCopy;
 	private bool withPlayer;
@@ -26,18 +26,22 @@ public class SkyControll : MonoBehaviour {
 	protected float OffsetY;
 	protected float CameraLastX;
 	protected float CameraLastY;
-	
+    public GameObject Parent;
 	// Use this for initialization
 	void Start ()
 	{
+        Debug.Log("Created");
+        Parent = GameObject.Find("SkySeperate");
+        transform.parent = Parent.transform;
 		Camera = GameObject.Find ("Player");
-		
+        LoadName = name;
 		CameraLastX = Camera.transform.position.x;
 		CameraLastY = Camera.transform.position.y;
 		canCreateCopy = false;
-		
+        RelativeSpeedY = 1;
 		scale = transform.localScale.x;
-	}
+        
+    }
 	
 	// Update is called once per frame
 	void LateUpdate () 
@@ -77,27 +81,26 @@ public class SkyControll : MonoBehaviour {
 		//if about to use up horizontal distance, copy
 		if(canCreateCopy)
 		{
-			if (((transform.position.x - Camera.transform.position.x) > 15f) && (!hasCreatedCopyL))
+            float distance = transform.position.x - Camera.transform.position.x;
+            if ((distance >-100f||distance<0) && (!hasCreatedCopyL))
 				// if player is going left
 			{
 				
-				CopyL = (GameObject)Instantiate(Resources.Load(LoadName), new Vector3( (transform.position.x - (98.9f*scale)),(transform.position.y) ,transform.position.z),transform.rotation);
-				
-				hasCreatedCopyL=true;
+				CopyL = (GameObject)Instantiate(Resources.Load(LoadName.Contains("(Clone)")?LoadName.Remove(LoadName.Length-7):LoadName), new Vector3( (transform.position.x - (98.9f*scale)),(transform.position.y) ,transform.position.z),transform.rotation);
+                hasCreatedCopyL =true;
 				
 				SkyControll CopyScript =CopyL.GetComponent<SkyControll>();
-				CopyScript.hasCreatedCopyR=true;
+				CopyScript.hasCreatedCopyL=false;
 			}
 			
-			if (((Camera.transform.position.x - transform.position.x) > 15f)&&(!hasCreatedCopyR))
+			if ((distance >0f||distance<100)&&(!hasCreatedCopyR))
 				//if player is going right
 			{
-				
-				CopyR= (GameObject)Instantiate(Resources.Load(LoadName), new Vector3( (transform.position.x + (98.9f*scale)),(this.transform.position.y) ,transform.position.z),transform.rotation);
-				hasCreatedCopyR=true;
+				CopyR= (GameObject)Instantiate(Resources.Load(LoadName.Contains("(Clone)") ? LoadName.Remove(LoadName.Length - 7) : LoadName), new Vector3( (transform.position.x + (98.9f*scale)),(this.transform.position.y) ,transform.position.z),transform.rotation);
+                hasCreatedCopyR =true;
 				
 				SkyControll CopyScript =CopyR.GetComponent<SkyControll>();
-				CopyScript.hasCreatedCopyL=true;
+				CopyScript.hasCreatedCopyR=false;
 			}
 		}
 		
@@ -107,22 +110,23 @@ public class SkyControll : MonoBehaviour {
 	
 	void Undraw()
 	{
-		if ((hasCreatedCopyR)&&(CopyR!=null))
-		{
-			if ((CopyR.transform.position.x - Camera.transform.position.x) > 100)
-			{
-				CopyR.SetActive (false);
-				hasCreatedCopyR=false;
-			}
-		}
-		if ((hasCreatedCopyL)&&(CopyL!=null))
-		{
-			if ((CopyL.transform.position.x - Camera.transform.position.x) < -100)
-			{
-				CopyL.SetActive (false);
-				hasCreatedCopyL=false;
-			}
-		}
+        if ((hasCreatedCopyR)&&(CopyR!=null))
+		    {
+			    if ((CopyR.transform.position.x - Camera.transform.position.x) > 500)
+			    {
+                    Destroy(CopyR);
+				    hasCreatedCopyR=false;
+			    }
+		    }
+		    if ((hasCreatedCopyL)&&(CopyL!=null))
+		    {
+			    if ((CopyL.transform.position.x - Camera.transform.position.x) < -500)
+			    {
+                    Destroy(CopyL);
+                    hasCreatedCopyL =false;
+			    }
+		    }
+		
 		
 	}
 	

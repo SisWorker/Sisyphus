@@ -1,0 +1,148 @@
+﻿using UnityEngine;
+using System.Collections;
+
+public class skyControlTest : MonoBehaviour {
+    public float FloatSpeed;
+    public float RelativeSpeedX;
+    public float RelativeSpeedY;
+    public string LoadName;
+
+    public bool hasCreatedCopyL = false;
+    public bool hasCreatedCopyR = false;
+
+    public bool canCreateCopy;
+    private bool withPlayer;
+
+    private float CopyDistance;
+    private float scale;
+    private GameObject Camera;
+    private GameObject CopyL;
+    private GameObject CopyR;
+    private Vector3 pos;
+
+    protected Vector3 Offset;
+    protected float OffsetX;
+    protected float OffsetY;
+    protected float CameraLastX;
+    protected float CameraLastY;
+
+    // Use this for initialization
+    void Start()
+    {
+        Camera = GameObject.Find("Player");
+
+        CameraLastX = Camera.transform.position.x;
+        CameraLastY = Camera.transform.position.y;
+        canCreateCopy = false;
+        
+
+        scale = transform.localScale.x;
+    }
+
+    // Update is called once per frame
+    void LateUpdate()
+    {
+        Float();
+        Follow();
+        Undraw();
+        Detect();
+
+        transform.position = pos;
+
+    }
+
+    void Follow()
+    {
+        OffsetX = (CameraLastX - Camera.transform.position.x) * RelativeSpeedX;
+        OffsetY = (CameraLastY - Camera.transform.position.y) * RelativeSpeedY;
+
+        Offset = new Vector3(-OffsetX, -OffsetY, 0f);
+
+        pos = pos + Offset;
+    }
+
+    void Float()
+    {
+        pos = (transform.position + new Vector3((FloatSpeed / 2 * Time.deltaTime), 0, 0));
+    }
+
+
+    void Detect()
+    {
+
+        canCreateCopy = withPlayer;
+
+
+        //if about to use up horizontal distance, copy
+        if (canCreateCopy)
+        {
+            if (((this.transform.position.x - Camera.transform.position.x) <=500f) && (!hasCreatedCopyL))
+            // if player is going left
+            {
+
+                CopyL = (GameObject)Instantiate(Resources.Load(LoadName), new Vector3((transform.position.x - (98.9f * scale)), (transform.position.y), transform.position.z), transform.rotation);
+
+                hasCreatedCopyL = true;
+
+                SkyControll CopyScript = CopyL.GetComponent<SkyControll>();
+                CopyScript.hasCreatedCopyR = true;
+            }
+
+            if (((Camera.transform.position.x - this.transform.position.x) <= 500f) && (!hasCreatedCopyR))
+            //if player is going right
+            {
+
+                CopyR = (GameObject)Instantiate(Resources.Load(LoadName), new Vector3((transform.position.x + (98.9f * scale)), (this.transform.position.y), transform.position.z), transform.rotation);
+                hasCreatedCopyR = true;
+
+                SkyControll CopyScript = CopyR.GetComponent<SkyControll>();
+                CopyScript.hasCreatedCopyL = true;
+            }
+        }
+
+        CameraLastX = Camera.transform.position.x;
+        CameraLastY = Camera.transform.position.y;
+    }
+
+    void Undraw()
+    {
+        if ((hasCreatedCopyR) && (CopyR != null))
+        {
+            if ((CopyR.transform.position.x - Camera.transform.position.x) > 100)
+            {
+                CopyR.SetActive(false);
+                hasCreatedCopyR = false;
+            }
+        }
+        if ((hasCreatedCopyL) && (CopyL != null))
+        {
+            if ((CopyL.transform.position.x - Camera.transform.position.x) < -100)
+            {
+                CopyL.SetActive(false);
+                hasCreatedCopyL = false;
+            }
+        }
+
+    }
+
+
+    void OnTriggerStay2D(Collider2D other)
+    {
+
+        if (other.tag == "Player")
+        {
+            //			Debug.Log("meetplayer");
+            withPlayer = true;
+        }
+
+    }
+
+    void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.tag == "Player")
+        {
+            withPlayer = false;
+            //canCreateCopy=true;
+        }
+    }
+}
