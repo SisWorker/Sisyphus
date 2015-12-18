@@ -6,6 +6,7 @@ public class RockObject : MonoBehaviour {
 	private Rigidbody2D Rock;
 	public UIDialog ms;
 
+    public int rollBackSpeed; 
 	public float SecondsToB=5f;
 	public bool canThrow;
 	private float Counter;
@@ -73,7 +74,7 @@ public class RockObject : MonoBehaviour {
 	{
         //Rollback
 
-        BackForce = backDirection ? new Vector3(3, 0f, 0) : new Vector3(-3, 0f, 0);
+        BackForce = backDirection ? new Vector3(rollBackSpeed, 0f, 0) : new Vector3(-rollBackSpeed, 0f, 0);
         if ((Counter >= SecondsToB) &&((Rock.velocity.x<MaxSpeed)&&(Rock.velocity.x>(-MaxSpeed))))
 		{
 			//Debug.Log ("Burst!");

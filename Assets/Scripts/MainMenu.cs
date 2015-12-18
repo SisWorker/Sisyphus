@@ -16,6 +16,11 @@ public class MainMenu : MonoBehaviour {
 	{
 		Application.LoadLevel ("LevelSelect");
 	}
+    public void loadLevel(string s) {
+        Application.LoadLevel(s);
+    }
+
+
 	public void Quit()
 	{
 		Debug.Log ("Game Exit");
