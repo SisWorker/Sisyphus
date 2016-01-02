@@ -11,7 +11,7 @@ public class UIDialog : MonoBehaviour {
 	void Start ()
 	{
 		dialogCount = -1;
-		dialogText = GameObject.Find ("DialogText").GetComponent<Text> ();
+		dialogText = GameObject.Find ("DialogContent").GetComponent<Text> ();
 	}
 	
 	// Update is called once per frame
