@@ -31,21 +31,21 @@ public class DialogControl : MonoBehaviour {
 
 	// Use this for initialization
 	void Start(){
-		dialogs = new List<List<string>> ();
+		dialogs = readFile (fileDir);
+		Debug.Log("dialogs length: "+dialogs.Count);
 		curDialog = new List<string> ();
-		curSentenceIndex = 0;
-		readFile (fileDir);
+		curDialog.Add ("No Content");
+		dialogText = DialogCanvas.GetComponentInChildren<Text> ();
+
+
 
 
 
 	}
 	// Update is called once per frame
 	void Update () {
-		dialogText = DialogCanvas.GetComponentInChildren<Text> ();
 		dialogSwitch (dialogOn);
-		if (curSentenceIndex < curDialog.Count && curSentenceIndex >= 0 && curDialog != null) {
-			dialogText.text = curDialog [curSentenceIndex];
-		}
+		dialogText.text = curDialog [curSentenceIndex];
 
 
 
@@ -55,11 +55,9 @@ public class DialogControl : MonoBehaviour {
 	//switch to turn on or off the dialog canvas according to the value of boolean: dialogOn
 	void dialogSwitch(bool dialogOn){
 		if (dialogOn) {
-			Time.timeScale = 0f;
 			DialogCanvas.SetActive (true);
 		} else {
 			DialogCanvas.SetActive (false);
-			Time.timeScale = 1f;
 		}
 	}
 
@@ -68,23 +66,30 @@ public class DialogControl : MonoBehaviour {
 	//read the dialog script into the data structure, so it can be called later
 	//the List<List<string>> will be initialized such that when text file is empty or incorrect, it will display a warning message
 
-	void readFile(string fileDir){
+	List<List<string>> readFile(string fileDir){
 		//read 
+		int loopcount = 0;
+		List<List<string>> result = new List<List<string>>();
 		StreamReader reader = new StreamReader(fileDir);
-		string line;
-		while((line = reader.ReadLine())!=null){
-			if(!line.Equals("")){
+		string line = reader.ReadLine();
+		while(line!=null){
+			if(line.Length!=0){
 				List<string> dialog = new List<string>();
-				while (!line.Equals("")) {
+				while (line.Length!=0) {
 					dialog.Add (line);
 					line = reader.ReadLine ();
-					if (line == null)
-						return;
+					if (line == null) {
+						result.Add (dialog);
+						return result;
+					}
 				}
-				dialogs.Add (dialog);
+				result.Add (dialog);
 			}
 			line = reader.ReadLine ();
+		
 		}
+		return result;
+
 	}
 
 
@@ -93,8 +98,11 @@ public class DialogControl : MonoBehaviour {
 	public void invokeDialog(int index){
 		if (index >= dialogs.Count||index<0) {
 			Debug.Log ("index out of dialogs range");
+
 			return;
 		}
+
+
 		curSentenceIndex = 0;
 		dialogOn = true;
 		curDialog = dialogs [index];

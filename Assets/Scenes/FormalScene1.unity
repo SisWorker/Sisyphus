@@ -171,7 +171,7 @@ GameObject:
   - 114: {fileID: 35920277}
   - 114: {fileID: 35920276}
   m_Layer: 5
-  m_Name: Next
+  m_Name: NextButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -234,8 +234,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: Proceed
+      - m_Target: {fileID: 181949120}
+        m_MethodName: procceed
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -956,6 +956,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogOn: 0
   DialogCanvas: {fileID: 87433042}
+  fileDir: /Users/Richard/Desktop/dialogTextScript.txt
 --- !u!4 &181949121
 Transform:
   m_ObjectHideFlags: 0
@@ -3329,6 +3330,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 693620418}
   - 61: {fileID: 693620417}
+  - 114: {fileID: 693620419}
   m_Layer: 0
   m_Name: DialogTrigger
   m_TagString: Untagged
@@ -3357,11 +3359,25 @@ Transform:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 693620416}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 564.82245, y: 300.1817, z: 0}
+  m_LocalPosition: {x: 114.7, y: 98.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 16
+--- !u!114 &693620419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 693620416}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 757e059edf6d343f7a4fd41faf15da51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isActive: 1
+  dialogIndex: 0
+  DialogManager: {fileID: 181949119}
 --- !u!4 &723094930 stripped
 Transform:
   m_PrefabParentObject: {fileID: 438180, guid: 8603641a04ccfa541aee008192e6e3af, type: 2}
@@ -5372,8 +5388,8 @@ MonoBehaviour:
     m_Alignment: 4
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
+    m_HorizontalOverflow: 1
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: New Text
 --- !u!222 &1273485335
@@ -5441,15 +5457,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 404862, guid: 071f2b9584049495c9a0d9269fdc2e5d, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 193.699997
+      value: 108.7
       objectReference: {fileID: 0}
     - target: {fileID: 404862, guid: 071f2b9584049495c9a0d9269fdc2e5d, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 134
+      value: 100.2
       objectReference: {fileID: 0}
     - target: {fileID: 404862, guid: 071f2b9584049495c9a0d9269fdc2e5d, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -10.5
+      value: -10.3
       objectReference: {fileID: 0}
     - target: {fileID: 404862, guid: 071f2b9584049495c9a0d9269fdc2e5d, type: 2}
       propertyPath: m_LocalRotation.x
@@ -5473,7 +5489,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 2064522, guid: 071f2b9584049495c9a0d9269fdc2e5d, type: 2}
       propertyPath: orthographic size
-      value: 17.6323833
+      value: 17.632383
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 071f2b9584049495c9a0d9269fdc2e5d, type: 2}
@@ -6934,19 +6950,19 @@ Prefab:
     m_Modifications:
     - target: {fileID: 447600, guid: e03a1b1e9a4ee4a4dab34d3ddd504b6b, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 192.5
+      value: 107.5
       objectReference: {fileID: 0}
     - target: {fileID: 447600, guid: e03a1b1e9a4ee4a4dab34d3ddd504b6b, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 134
+      value: 100.2
       objectReference: {fileID: 0}
     - target: {fileID: 447600, guid: e03a1b1e9a4ee4a4dab34d3ddd504b6b, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -.600000024
+      value: -0.4
       objectReference: {fileID: 0}
     - target: {fileID: 447600, guid: e03a1b1e9a4ee4a4dab34d3ddd504b6b, type: 2}
       propertyPath: m_LocalRotation.x
-      value: -.00235619303
+      value: -0.002356193
       objectReference: {fileID: 0}
     - target: {fileID: 447600, guid: e03a1b1e9a4ee4a4dab34d3ddd504b6b, type: 2}
       propertyPath: m_LocalRotation.y
@@ -6958,7 +6974,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 447600, guid: e03a1b1e9a4ee4a4dab34d3ddd504b6b, type: 2}
       propertyPath: m_LocalRotation.w
-      value: .999997258
+      value: 0.99999726
       objectReference: {fileID: 0}
     - target: {fileID: 447600, guid: e03a1b1e9a4ee4a4dab34d3ddd504b6b, type: 2}
       propertyPath: m_RootOrder
@@ -7093,15 +7109,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 451646, guid: 83771e8a217dce04f8d704f813a8a461, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 44.4000015
+      value: -40.6
       objectReference: {fileID: 0}
     - target: {fileID: 451646, guid: 83771e8a217dce04f8d704f813a8a461, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 99.5
+      value: 65.7
       objectReference: {fileID: 0}
     - target: {fileID: 451646, guid: 83771e8a217dce04f8d704f813a8a461, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -.400000006
+      value: -0.2
       objectReference: {fileID: 0}
     - target: {fileID: 451646, guid: 83771e8a217dce04f8d704f813a8a461, type: 2}
       propertyPath: m_LocalRotation.x
@@ -7226,15 +7242,15 @@ Prefab:
     m_Modifications:
     - target: {fileID: 422936, guid: 4400161671f3b9840826df88bf588dc3, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 204.5
+      value: 119.5
       objectReference: {fileID: 0}
     - target: {fileID: 422936, guid: 4400161671f3b9840826df88bf588dc3, type: 2}
       propertyPath: m_LocalPosition.y
-      value: 132.300003
+      value: 98.5
       objectReference: {fileID: 0}
     - target: {fileID: 422936, guid: 4400161671f3b9840826df88bf588dc3, type: 2}
       propertyPath: m_LocalPosition.z
-      value: -9
+      value: -8.8
       objectReference: {fileID: 0}
     - target: {fileID: 422936, guid: 4400161671f3b9840826df88bf588dc3, type: 2}
       propertyPath: m_LocalRotation.x
@@ -8110,7 +8126,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &2012620581
 MonoBehaviour:
   m_ObjectHideFlags: 0

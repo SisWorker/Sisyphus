@@ -30,7 +30,6 @@ public class SkyControll : MonoBehaviour {
 	// Use this for initialization
 	void Start ()
 	{
-        Debug.Log("Created");
         Parent = GameObject.Find("SkySeperate");
         transform.parent = Parent.transform;
 		Camera = GameObject.Find ("Player");
