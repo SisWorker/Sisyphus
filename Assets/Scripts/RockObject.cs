@@ -45,6 +45,7 @@ public class RockObject : MonoBehaviour {
 
 		if (onGround == true)
 		{
+			Debug.Log ("ON GROUND");
 			Rock.drag = 1.5f;
 
 			if (Rock.velocity.x > MaxSpeed) {
@@ -66,6 +67,7 @@ public class RockObject : MonoBehaviour {
 		else 
 		{
 			Rock.drag = 0f;
+			Debug.Log ("OFF GROUND");
 		}
 
 	}
@@ -112,11 +114,7 @@ public class RockObject : MonoBehaviour {
 
 	void OnTriggerEnter2D(Collider2D other)
 	{
-		//eject rock when reach top
-		if (other.gameObject.CompareTag ("Bridge")) {
-
-		}
-
+		
 
 		//slow when touching player
 		if (other.gameObject.CompareTag ("Player"))
@@ -127,6 +125,7 @@ public class RockObject : MonoBehaviour {
 
 		if (other.gameObject.layer == 11)
 		{
+			onGround = true;
 			
 			if (other.gameObject.tag!="Slope"&&other.gameObject.GetComponent<OneWayPlatform>()!=null)
 			{
@@ -143,7 +142,7 @@ public class RockObject : MonoBehaviour {
 
 	void OnTriggerStay2D(Collider2D other)
 	{
-        onGround = true;
+		
         if (other.gameObject.CompareTag ("MovingPlatform"))
 		{
 			offset = other.gameObject.GetComponentInParent<MovingPlatform>().GetMoveDir();

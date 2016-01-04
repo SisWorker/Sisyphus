@@ -11,6 +11,7 @@ public class ImproveBridge : MonoBehaviour
 
     public bool Working;
     public float[] rotateSpeed;
+	public float throwForceIndex;
     public LinkedList<Rigidbody2D> throwQ = new LinkedList<Rigidbody2D>();
 
     //public List <Collider2D> Contacted = new List<Collider2D>();
@@ -174,7 +175,7 @@ public class ImproveBridge : MonoBehaviour
             CounterClock = -1;
         }
 
-        float throwforce = Mathf.Abs(rotateSpeed[curPos] * diag * 0.5f);
+		float throwforce = Mathf.Abs(rotateSpeed[curPos] * diag * 0.05f)*throwForceIndex;
 
         float throwx = throwforce * sin * CounterClock;
         float throwy = throwforce * cos * CounterClock;

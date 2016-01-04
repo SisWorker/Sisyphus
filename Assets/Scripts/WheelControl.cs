@@ -5,7 +5,7 @@ public class WheelControl : MonoBehaviour {
 	public bool Working;
 	public float RotateTime;
 
-	public GameObject bridge;
+	public GameObject[] bridges;
 
 
 	private Vector3 origin;
@@ -14,7 +14,7 @@ public class WheelControl : MonoBehaviour {
 	private float TimePassed;
 
 	private PlayerControl playerScript;
-	private ImproveBridge bridgeScript;
+
 
 
 
@@ -26,7 +26,6 @@ public class WheelControl : MonoBehaviour {
 		//bridge = GameObject.Find ("bridge");
 
 		playerScript = player.GetComponent<PlayerControl> ();
-		bridgeScript = bridge.GetComponent<ImproveBridge> ();
 
 		origin = transform.position;
 
@@ -65,7 +64,10 @@ public class WheelControl : MonoBehaviour {
 			{
 				Working = true;
 
-				bridgeScript.Working = true;
+				foreach (GameObject b in bridges) {
+					ImproveBridge bridgeScript = b.gameObject.GetComponent<ImproveBridge> ();
+					bridgeScript.Working = true;
+				}
 			}
 		}
 	}
